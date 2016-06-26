@@ -1,0 +1,28 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <!--IWS admin-->
+        <service id="sonata.admin.iws" class="AppBundle\Admin\MenuAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="IWS" label="Menu"/>
+            <argument />
+            <argument>AppBundle\Entity\Menu</argument>
+            <argument />
+        </service>
+
+        <!--Article admin-->
+        <service id="sonata.admin.article" class="AppBundle\Admin\ArticleAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="IWS" label="Articles"/>
+            <argument />
+            <argument>AppBundle\Entity\Articles</argument>
+            <argument />
+        </service>
+
+        <service id="app.form.type.file" class="AppBundle\Form\IconType">
+            <tag name="form.type" alias="ad_file_type"  />
+        </service>
+
+
+    </services>
+</container>
