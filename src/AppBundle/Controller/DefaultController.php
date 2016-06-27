@@ -38,7 +38,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $menu = $em->getRepository('AppBundle:Menu')->findOneBySlug($slug);
 
-        return new JsonResponse(array('menu' => $menu));
+        return array('menu' => $menu);
     }
     /**
      * This action generate pages by menu slug
