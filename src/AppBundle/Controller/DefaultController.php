@@ -42,6 +42,8 @@ class DefaultController extends Controller
     }
 
     /**
+     *
+     * @Template()
      * @param $slug
      * @return array
      */

@@ -20,6 +20,7 @@ class ArticlesRepository extends EntityRepository
                             FROM AppBundle:Articles a
                             LIKE JOIN a.menu m
                             WHERE m.slug = :slug
+                            ORDER BY a.position
                           ')
             ->setParameter('slug', $slug)
             ->getResult()
