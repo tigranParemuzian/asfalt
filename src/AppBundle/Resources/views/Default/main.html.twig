@@ -8,14 +8,15 @@
                         {% if menu %}
                             {% if menu.title %}
                                 {% set words = menu.title |split(',') %}
-                                {% endif %}
-                        <h1>Вы любите<div id="rotate">{% for word in words  %}
+                            {% endif %}
+                            <h1>Вы любите<div id="rotate">
+                                {% for word in words  %}
                                     <div>
-                                        {{ word }}
+                                        {{- word -}}
                                     </div>
                                 {% endfor %}
                                 </div></h1>
-                        <p class="intro-text">{{ memu.description }}</p>
+                        <p class="intro-text"> {{- menu.description -}} </p>
                         {% endif %}
                     </div>
                     <div class="section-next page-scroll"><a href="#o-nas" class="btn btn-circle"><i class="fa fa-angle-down"></i></a>
