@@ -4,8 +4,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div id="slide-intro">
-                        {{ dump(menu) }}
-                        {{ dump(menu.title) }}
+                        {% set words = [] %}
                         {% if menu %}
                             {% if menu.title %}
                                 {% set words = menu.title |split(',') %}
