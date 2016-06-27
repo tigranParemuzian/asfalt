@@ -68,17 +68,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.0">
-              <caret line="50" column="58" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.57478994">
+              <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
               <folding>
                 <element signature="e#1023#3008#0#Twig" expanded="false" />
-                <element signature="e#11252#17650#0#Twig" expanded="false" />
-                <element signature="e#17655#19019#0#Twig" expanded="false" />
-                <element signature="e#19024#25680#0#Twig" expanded="false" />
-                <element signature="e#30227#35646#0#Twig" expanded="false" />
+                <element signature="e#11255#17653#0#Twig" expanded="false" />
+                <element signature="e#17658#19022#0#Twig" expanded="false" />
+                <element signature="e#19027#25683#0#Twig" expanded="false" />
+                <element signature="e#30230#35649#0#Twig" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -98,10 +98,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5738255">
+            <state vertical-scroll-proportion="-13.153846">
               <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding />
             </state>
@@ -170,8 +170,8 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Repository/MenuRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/views/Default/main.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
       </list>
     </option>
   </component>
@@ -1031,10 +1031,10 @@
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
             <element signature="e#1023#3008#0#Twig" expanded="false" />
-            <element signature="e#11252#17650#0#Twig" expanded="false" />
-            <element signature="e#17655#19019#0#Twig" expanded="false" />
-            <element signature="e#19024#25680#0#Twig" expanded="false" />
-            <element signature="e#30227#35646#0#Twig" expanded="false" />
+            <element signature="e#11255#17653#0#Twig" expanded="false" />
+            <element signature="e#17658#19022#0#Twig" expanded="false" />
+            <element signature="e#19027#25683#0#Twig" expanded="false" />
+            <element signature="e#30230#35649#0#Twig" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1283,20 +1283,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.0">
-          <caret line="50" column="58" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
-          <folding>
-            <element signature="e#1023#3008#0#Twig" expanded="false" />
-            <element signature="e#11252#17650#0#Twig" expanded="false" />
-            <element signature="e#17655#19019#0#Twig" expanded="false" />
-            <element signature="e#19024#25680#0#Twig" expanded="false" />
-            <element signature="e#30227#35646#0#Twig" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.3333335">
@@ -1311,9 +1297,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5738255">
+        <state vertical-scroll-proportion="-13.153846">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.57478994">
+          <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+          <folding>
+            <element signature="e#1023#3008#0#Twig" expanded="false" />
+            <element signature="e#11255#17653#0#Twig" expanded="false" />
+            <element signature="e#17658#19022#0#Twig" expanded="false" />
+            <element signature="e#19027#25683#0#Twig" expanded="false" />
+            <element signature="e#30230#35649#0#Twig" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
