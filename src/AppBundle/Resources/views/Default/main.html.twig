@@ -9,7 +9,7 @@
                             {% if menu.title %}
                                 {% set words = menu.title |split(',') %}
                                 {% endif %}
-                        <h1>Вы любите<div id="rotate">{% for words in word  %}
+                        <h1>Вы любите<div id="rotate">{% for word in words  %}
                                     <div>
                                         {{ word }}
                                     </div>
