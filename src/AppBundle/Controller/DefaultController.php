@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -24,6 +26,20 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     *
+     * @Template()
+     *
+     * @param $slug
+     * @return array
+     */
+    public function mainAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository('AppBundle:Menu')->findOneBySlug($slug);
+
+        return new JsonResponse(array('menu' => $menu));
+    }
     /**
      * This action generate pages by menu slug
      *

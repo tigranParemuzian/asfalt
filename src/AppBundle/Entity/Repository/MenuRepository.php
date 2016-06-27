@@ -11,14 +11,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class MenuRepository extends EntityRepository
 {
-    public function findData()
+    /**
+     * This function use to get articles by menu slug
+     * @param $slug
+     * @return array
+     */
+    public function findData($slug)
     {
         return $this->getEntityManager()
             ->createQuery('SELECT m, a FROM AppBundle:Menu m
                             LEFT JOIN m.article a
+                            WHERE m.slug = :slug
 
                   ')
-            ->getResult()
+            ->setParameter('slug', $slug)
+            ->getOneOrNullResult()
             ;
     }
 

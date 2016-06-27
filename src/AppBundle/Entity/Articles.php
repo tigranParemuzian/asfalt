@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Articles
  * @ORM\Table(name="articles", uniqueConstraints={@ORM\UniqueConstraint(name="menu_position_unique_idx", columns={"menu_id", "position"})})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ArticlesRepository")
  * @UniqueEntity(fields={"menu", "position"}, message="entity.duplicate")
  *
  */

@@ -42,9 +42,7 @@
         "knplabs/knp-paginator-bundle": "2.4.*",
         "stfalcon/tinymce-bundle": "0.3.*",
         "a2lix/translation-form-bundle": "1.*",
-        "gedmo/doctrine-extensions": "^2.4",
-        "sonata-project/media-bundle": "2.*"
-
+        "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
