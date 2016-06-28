@@ -32,7 +32,7 @@
                     <h3>{{- article.title -}}</h3>
                     <p>{{- article.body -}}</p>
                 </div>
-                {% if j=0 or j=4 or j=7 %} </div>{% endif %}
+                {% if j == 0 or j == 4 or j == 7 %} </div>{% endif %}
                 {% set j = j +1 %}
             {% endfor %}
         {% endif %}
