@@ -1,11 +1,5 @@
-.navbar-default {
-    margin-top: 20px;
-}
-
-.navbar-brand{
-    margin-top: -20px;
-}
-
-.navbar-brand>img{
-    width: 80%;
+body.dark-layout #uslughi .row.list-services .col-lg-4 {
+    border-right-color: #353535;
+    border-bottom-color: #353535;
+    min-height: 430px;
 }
