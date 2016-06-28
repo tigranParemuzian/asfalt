@@ -54,6 +54,29 @@ class DefaultController extends Controller
 
         return array('menu' => $menu);
     }
+
+    /**
+     *
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function servicesAction($slug)
+    {
+        $data = $this->getMenuData($slug);
+        return array('menu' => $data);
+    }
+
+
+
+
+    private function getMenuData($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository('AppBundle:Menu')->findOneBySlug($slug);
+
+        return $menu;
+    }
     /**
      * This action generate pages by menu slug
      *
