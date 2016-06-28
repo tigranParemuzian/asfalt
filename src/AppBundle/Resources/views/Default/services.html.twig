@@ -19,23 +19,65 @@
             </div>
         </div>
         {% if menu.article is not null %}
-            {% set i = 0 %}
+
+            {% set first = {} %}
+            {% set sec = {} %}
+            {% set last = {} %}
             {% set j = 0 %}
+
             {% for article in menu.article %}
-                {% if j == 0 or j == 4 or j == 7 %}  <div class="row list-services"> {% endif %}
-                {% set i = i +2 %}
-                <div data-wow-delay="0.{{ i }}s" class="col-lg-4 wow flipInY">
-                    <a href="#">
-                        <div class="icon"><i class="fa {{ article.icon }}"></i>
-                        </div>
-                    </a>
-                    <h3>{{- article.title -}}</h3>
-                    <p>{{- article.body -}}</p>
-                </div>
-                {% if j == 0 or j == 4 or j == 7 %} </div>{% endif %}
-                {% set j = j +1 %}
+                {% if j < 3 %}
+                    {% set first = first|merge([article]) %}
+                {% elseif 3<j<6 %}
+                    {% set sec = sec|merge([article]) %}
+                {% elseif 7<j<9 %}
+                    {% set last = last|merge([article]) %}
+                {% endif %}
+                    {% set j = j + 1 %}
             {% endfor %}
+
+            <div class="row list-services">
+                {% set i = 0 %}
+                {% for article in first %}
+                    {% set i = i +2 %}
+                    <div data-wow-delay="0.{{ i }}s" class="col-lg-4 wow flipInY">
+                        <a href="#">
+                            <div class="icon"><i class="fa {{ article.icon }}"></i>
+                            </div>
+                        </a>
+                        <h3>{{- article.title -}}</h3>
+                        <p>{{- article.body -}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row list-services">
+                {% set i = 0 %}
+                {% for article in sec %}
+                    {% set i = i +2 %}
+                    <div data-wow-delay="0.{{ i }}s" class="col-lg-4 wow flipInY">
+                        <a href="#">
+                            <div class="icon"><i class="fa {{ article.icon }}"></i>
+                            </div>
+                        </a>
+                        <h3>{{- article.title -}}</h3>
+                        <p>{{- article.body -}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row list-services">
+                {% set i = 0 %}
+                {% for article in last %}
+                    {% set i = i +2 %}
+                    <div data-wow-delay="0.{{ i }}s" class="col-lg-4 wow flipInY">
+                        <a href="#">
+                            <div class="icon"><i class="fa {{ article.icon }}"></i>
+                            </div>
+                        </a>
+                        <h3>{{- article.title -}}</h3>
+                        <p>{{- article.body -}}</p>
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
-    {% endif %}
     </div>
 </section>
