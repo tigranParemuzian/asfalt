@@ -23,14 +23,14 @@
             {% set first = {} %}
             {% set sec = {} %}
             {% set last = {} %}
-            {% set j = 0 %}
+            {% set j = 1 %}
 
             {% for article in menu.article %}
-                {% if j < 3 %}
+                {% if j <= 3 %}
                     {% set first = first|merge([article]) %}
-                {% elseif 3<j<6 %}
+                {% elseif 3 < j <= 6 %}
                     {% set sec = sec|merge([article]) %}
-                {% elseif 7<j<9 %}
+                {% elseif 7 < j <= 9 %}
                     {% set last = last|merge([article]) %}
                 {% endif %}
                     {% set j = j + 1 %}
