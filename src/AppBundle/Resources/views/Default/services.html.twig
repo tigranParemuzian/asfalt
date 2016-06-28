@@ -22,7 +22,7 @@
             {% set i = 0 %}
             {% set j = 0 %}
             {% for article in menu.article %}
-                {% if j=0 or j=4 or j=7 %}  <div class="row list-services"> {% endif %}
+                {% if j == 0 or j == 4 or j == 7 %}  <div class="row list-services"> {% endif %}
                 {% set i = i +2 %}
                 <div data-wow-delay="0.{{ i }}s" class="col-lg-4 wow flipInY">
                     <a href="#">
