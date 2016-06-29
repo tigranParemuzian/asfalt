@@ -2,21 +2,52 @@
     <div class="container">
         <div class="row mbxxl">
             <div class="col-md-12">
-                <h2 class="section-heading">Our <span>Portfolio</span></h2>
+                {% set titles = [] %}
+                {% if menu %}
+                {% set titles = menu.title|split(' ') %}
+
+                <h2 class="section-heading">
+                    {% set i = 0 %}
+                    {% for title in titles %}
+                    {% if i >0 %}<span>{{- title -}}
+                        {% else %}{{- title -}}
+                        {% endif %}
+                        {% set i = i + 1 %}
+                        {% endfor %}</span></h2>
                 <div class="line"></div>
-                <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="section-description">{{- menu.description -}}</p>
+
+                {% if menu.article is not null %}
+
+                    {% set items = {} %}
+                    {% set categores = [] %}
+
+                    {% for article in menu.article %}
+
+                        {% if article.groupName not in categores %}
+                            {% set categores = categores|merge([article.groupName]) %}
+                        {% endif %}
+
+                        {% set items = items|merge([article]) %}
+
+                    {% endfor %}
+
+                {% endif %}
+
                 <div id="filters">
                     <ul class="list-unstyled">
                         <li><a href="javascript:;" data-filter="*" class="active"><h3>All</h3></a>
                         </li>
-                        <li><a href="javascript:;" data-filter=".web-design"><h3>Web Design</h3></a>
+                        {% for category in categores %}
+                        <li><a href="javascript:;" data-filter=".{{- category -}}"><h3>{{ category }}</h3></a>
                         </li>
-                        <li><a href="javascript:;" data-filter=".development"><h3>Development</h3></a>
+                        {% endfor %}
+                       {# <li><a href="javascript:;" data-filter=".development"><h3>Development</h3></a>
                         </li>
                         <li><a href="javascript:;" data-filter=".design"><h3>Design</h3></a>
                         </li>
                         <li><a href="javascript:;" data-filter=".illustration"><h3>Illustration</h3></a>
-                        </li>
+                        </li>#}
                     </ul>
                 </div>
             </div>
@@ -24,17 +55,19 @@
     </div>
     <div class="isotope">
         <ul id="gallery-full-width" class="list-unstyled">
-            <li class="element-item web-design">
-                <a href="http://swlabs.co/images/portfolio/portfolio1.jpg" data-lightbox="image-1" data-title="Image 1" class="gallery-image"><img src="http://swlabs.co/images/portfolio/portfolio1.jpg" alt="" class="img-responsive" />
+            {% for item in items %}
+            <li class="element-item {{- item.groupName -}}">
+                <a href="{{ item.getDownloadLink }}" data-lightbox="{{- item.title -}}" data-title="{{ item.title }}" class="gallery-image"><img src="{{ item.getDownloadLink }}" alt="{{ item.title }}" class="img-responsive" />
                     <div class="gallery-overlay">
                         <div class="thumb-info">
-                            <h3>Featured Image</h3>
-                            <p class="gallery-tags">Web Design</p><i class="fa fa-picture-o"></i>
+                            <h3>{{ item.title }}</h3>
+                            <p class="gallery-tags">{{ item.body }}</p><i class="fa fa-picture-o"></i>
                         </div>
                     </div>
                 </a>
             </li>
-            <li class="element-item development illustration">
+            {% endfor %}
+            {#<li class="element-item development illustration">
                 <a href="http://swlabs.co/images/portfolio/portfolio2.jpg" data-lightbox="image-2" data-title="Image 2" class="gallery-image"><img src="http://swlabs.co/images/portfolio/portfolio2.jpg" alt="" class="img-responsive" />
                     <div class="gallery-overlay">
                         <div class="thumb-info">
@@ -103,7 +136,7 @@
                         </div>
                     </div>
                 </a>
-            </li>
+            </li>#}
         </ul>
     </div>
 </section>
