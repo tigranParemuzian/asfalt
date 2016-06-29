@@ -56,8 +56,8 @@
     <div class="isotope">
         <ul id="gallery-full-width" class="list-unstyled">
             {% for item in items %}
-            <li class="element-item {{- item.groupName -}}">
-                <a href="{{ item.getDownloadLink }}" data-lightbox="{{- item.title -}}" data-title="{{ item.title }}" class="gallery-image"><img src="{{ item.getDownloadLink }}" alt="{{ item.title }}" class="img-responsive" />
+            <li class="element-item {{item.groupName|lower|replace({' ':'_'})}}">
+                <a href="{{ item.getDownloadLink }}" data-lightbox="{{item.title|lower|replace({' ':'_'})}}" data-title="{{ item.title|lower }}" class="gallery-image"><img src="{{ item.getDownloadLink }}" alt="{{ item.title|lower }}" class="img-responsive" />
                     <div class="gallery-overlay">
                         <div class="thumb-info">
                             <h3>{{ item.title }}</h3>
@@ -87,7 +87,7 @@
                     </div>
                 </a>
             </li>
-            <li class="element-item web-design">
+            {#<li class="element-item web-design">
                 <a href="http://swlabs.co/images/portfolio/portfolio4.jpg" data-lightbox="image-4" data-title="Image 4" class="gallery-image"><img src="http://swlabs.co/images/portfolio/portfolio4.jpg" alt="" class="img-responsive" />
                     <div class="gallery-overlay">
                         <div class="thumb-info">
