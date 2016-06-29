@@ -39,7 +39,7 @@
                         <li><a href="javascript:;" data-filter="*" class="active"><h3>All</h3></a>
                         </li>
                         {% for category in categores %}
-                        <li><a href="javascript:;" data-filter=".{{- category -}}"><h3>{{ category }}</h3></a>
+                        <li><a href="javascript:;" data-filter=".{{ category|lower|replace({' ':'_'}) }}"><h3>{{ category }}</h3></a>
                         </li>
                         {% endfor %}
                        {# <li><a href="javascript:;" data-filter=".development"><h3>Development</h3></a>
