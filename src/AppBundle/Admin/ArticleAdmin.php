@@ -29,6 +29,7 @@ class ArticleAdmin extends Admin
                     ->add('body', 'textarea', array('label' => 'Body'))
                     ->add('footer')
                     ->add('position')
+                    ->add('groupName')
                     ->add('file', 'ad_file_type', array('required' => false, 'label'=>'Ad image'))
                     ->add('menu')
                 ->end()
@@ -45,6 +46,7 @@ class ArticleAdmin extends Admin
             ->add('body')
             ->add('footer')
             ->add('position')
+            ->add('groupName')
             ->add('menu')
             ;
     }
@@ -59,6 +61,7 @@ class ArticleAdmin extends Admin
             ->addIdentifier('body')
             ->addIdentifier('footer')
             ->addIdentifier('position')
+            ->addIdentifier('groupName')
             ->add('menu')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -77,6 +80,7 @@ class ArticleAdmin extends Admin
             ->add('body')
             ->add('footer')
             ->add('position')
+            ->add('groupName')
             ->add('menu')
         ;
     }

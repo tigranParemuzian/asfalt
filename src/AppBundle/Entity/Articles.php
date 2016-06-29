@@ -62,6 +62,12 @@ class Articles
 
     /**
      * @var
+     * @ORM\Column(name="group_name", type="string", nullable=true)
+     */
+    private $groupName;
+
+    /**
+     * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Menu", inversedBy="article")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      */
@@ -220,5 +226,28 @@ class Articles
     public function getMenu()
     {
         return $this->menu;
+    }
+
+    /**
+     * Set groupName
+     *
+     * @param string $groupName
+     * @return Articles
+     */
+    public function setGroupName($groupName)
+    {
+        $this->groupName = $groupName;
+
+        return $this;
+    }
+
+    /**
+     * Get groupName
+     *
+     * @return string
+     */
+    public function getGroupName()
+    {
+        return $this->groupName;
     }
 }

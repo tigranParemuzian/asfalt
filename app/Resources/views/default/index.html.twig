@@ -129,7 +129,10 @@
             </div>
         </div>
     </section>
-    <section id="raboti" class="section-content">
+    {% block portfolio %}
+        {{ render(controller('AppBundle:Default:portfolio', { 'slug': 'raboti'})) }}
+    {% endblock portfolio %}
+    {#<section id="raboti" class="section-content">
         <div class="container">
             <div class="row mbxxl">
                 <div class="col-md-12">
@@ -237,7 +240,7 @@
                 </li>
             </ul>
         </div>
-    </section>
+    </section>#}
     <section id="tsieny" class="section-content">
         <div class="container">
             <div class="row mbxxl">
@@ -405,7 +408,7 @@
                             </tr>
                             <tr>
                                 <td>Email:</td>
-                                <td>contact@email.com</td>
+                                <td>workasfalt@mail.ru </td>
                             </tr>
                             <tr>
                                 <td>Fax:</td>
@@ -413,11 +416,11 @@
                             </tr>
                             <tr>
                                 <td>Adress:</td>
-                                <td>8186 Mckinley Ave</td>
+                                <td>Калужский област, город балабаново улица дзержинеского 93 кв 75 </td>
                             </tr>
                             <tr>
                                 <td>Phone:</td>
-                                <td>(987) 654-3210</td>
+                                <td>89032708285, 89163250382  </td>
                             </tr>
                             </tbody>
                         </table>

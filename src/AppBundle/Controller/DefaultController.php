@@ -56,6 +56,18 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function portfolioAction($slug)
+    {
+        $data = $this->getMenuData($slug);
+        return array('menu' => $data);
+
+    }
+
+    /**
      *
      * @Template()
      * @param $slug
