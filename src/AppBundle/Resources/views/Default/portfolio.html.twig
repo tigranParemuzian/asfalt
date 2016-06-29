@@ -1,9 +1,9 @@
 <section id="raboti" class="section-content">
+    {% set titles = [] %}
+    {% if menu %}
     <div class="container">
         <div class="row mbxxl">
             <div class="col-md-12">
-                {% set titles = [] %}
-                {% if menu %}
                 {% set titles = menu.title|split(' ') %}
 
                 <h2 class="section-heading">
@@ -139,4 +139,5 @@
             </li>#}
         </ul>
     </div>
+    {% endif %}
 </section>
