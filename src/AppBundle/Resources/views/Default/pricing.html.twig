@@ -31,10 +31,7 @@
                     {% set i = i + 2 %}
                     {% set textes = [article.body|split(',')] %}
                     {% set parameters =[article.icon|split(',')] %}
-                    {% set proces = proces|merge([article.footer|split(',')]) %}
-                    {{ dump(textes) }}
-                    {{ dump(parameters) }}
-                    {{ dump(proces) }}
+                    {% set proces = [article.footer|split(',')] %}
                     <div data-wow-delay=".{{ i }}s" class="col-md-4 col-sm-8 wow fadeInLeft">
                         <div class="pricing-widget">
                             <div class="pricing-head">{{ article.title }}</div>
@@ -44,13 +41,16 @@
                                 <ul class="pricing-list text-center">
                                     {#<li><a class="btn btn-sm btn-default">Start your free trial!</a>
                                     </li>#}
-                                    {#{% set j = 0 %}
+                                    {% set j = 0 %}
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
                                         {{ dump(parameters[j]) }}
-                                        <li>{{ text }}<strong>{{ parameters[j] }} {{ proces[j] }}</strong>
+                                        <li>{{ text }}<strong>
+                                                {% if parameters is not null %}{{ parameters[j] }}{% endif %}
+                                                {% if parameters is not null %}{{ proces[j] }}{% endif %}
+                                                </strong>
                                     </li>
-                                    {% endfor %}#}
+                                    {% endfor %}
                                     {#<li>Bandwidth per month <strong>100 GB</strong>
                                     </li>
                                     <li>No. of email accounts <strong>1</strong>
