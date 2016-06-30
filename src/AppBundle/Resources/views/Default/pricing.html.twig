@@ -45,6 +45,8 @@
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
                                         {{ dump(text) }}
+                                        {{ dump(parameters) }}
+                                        {{ dump(proces) }}
                                         <{#li>{{ text }}<strong>
                                                 {% if parameters is not null %}{{ parameters[j] }}{% endif %}
                                                 {% if parameters is not null %}{{ proces[j] }}{% endif %}
