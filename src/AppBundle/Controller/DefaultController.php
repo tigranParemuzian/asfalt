@@ -86,7 +86,8 @@ class DefaultController extends Controller
      * @return array
      */
     public function pricingAction($slug){
-
+        $data = $this->getMenuData($slug);
+        return array('menu' => $data);
     }
 
     private function getMenuData($slug)
