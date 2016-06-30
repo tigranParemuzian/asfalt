@@ -22,6 +22,7 @@ class MenuRepository extends EntityRepository
             ->createQuery('SELECT m, a FROM AppBundle:Menu m
                             LEFT JOIN m.article a
                             WHERE m.slug = :slug
+                            ORDER BY a.position
 
                   ')
             ->setParameter('slug', $slug)

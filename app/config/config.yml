@@ -121,7 +121,7 @@ sonata_block:
 
 # sonata admin configuration
 sonata_admin:
-    title:      Globing Storage
+    title:      Asphalt Moscow
     title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         # default global templates

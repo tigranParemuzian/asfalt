@@ -79,8 +79,15 @@ class DefaultController extends Controller
         return array('menu' => $data);
     }
 
+    /**
+     *
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function pricingAction($slug){
 
-
+    }
 
     private function getMenuData($slug)
     {

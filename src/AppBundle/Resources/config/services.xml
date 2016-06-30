@@ -4,8 +4,8 @@
     <services>
 
         <!--IWS admin-->
-        <service id="sonata.admin.iws" class="AppBundle\Admin\MenuAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="IWS" label="Menu"/>
+        <service id="sonata.admin.menu" class="AppBundle\Admin\MenuAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Asphalt" label="Menu"/>
             <argument />
             <argument>AppBundle\Entity\Menu</argument>
             <argument />
@@ -13,7 +13,7 @@
 
         <!--Article admin-->
         <service id="sonata.admin.article" class="AppBundle\Admin\ArticleAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="IWS" label="Articles"/>
+            <tag name="sonata.admin" manager_type="orm" group="Asphalt" label="Articles"/>
             <argument />
             <argument>AppBundle\Entity\Articles</argument>
             <argument />
