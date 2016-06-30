@@ -32,7 +32,8 @@
                     {% set textes = [article.body|split(',')] %}
                     {% set parameters = parameters|merge([article.icon|split(',')]) %}
                     {% set proces = proces|merge([article.footer|split(',')]) %}
-
+                    {{ dump(parameters) }}
+                    {{ dump(parameters) }}
                     <div data-wow-delay=".{{ i }}s" class="col-md-4 col-sm-8 wow fadeInLeft">
                         <div class="pricing-widget">
                             <div class="pricing-head">{{ article.title }}</div>
@@ -45,7 +46,8 @@
                                     {% set j = 0 %}
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
-                                        <li>{{ text }}<strong>{{ parameters[j] }} {{ proces[j] }}</strong>
+                                        {{ dump(parameters[j]) }}
+                                        {#<li>{{ text }}<strong>{{ parameters[j] }} {{ proces[j] }}</strong>#}
                                     </li>
                                     {% endfor %}
                                     {#<li>Bandwidth per month <strong>100 GB</strong>
