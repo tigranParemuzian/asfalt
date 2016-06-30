@@ -23,9 +23,6 @@
             {% if menu.article is not null %}
 
                 {% set items = {} %}
-                {#{% set textes = [] %}#}
-                {#{% set parameters = [] %}#}
-                {#{% set proces = [] %}#}
                 {% set i = 0 %}
                 {% for article in menu.article %}
                     {% set i = i + 2 %}
@@ -44,14 +41,11 @@
                                     {% set j = 0 %}
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
-                                        {{ dump(text) }}
-                                        {{ dump(parameters) }}
-                                        {{ dump(proces) }}
-                                        <{#li>{{ text }}<strong>
+                                        <li>{{ text }}<strong>
                                                 {% if parameters is not null %}{{ parameters[j] }}{% endif %}
                                                 {% if parameters is not null %}{{ proces[j] }}{% endif %}
                                                 </strong>
-                                    </li>#}
+                                    </li>
                                     {% endfor %}
                                     {#<li>Bandwidth per month <strong>100 GB</strong>
                                     </li>
