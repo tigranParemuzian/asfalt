@@ -42,8 +42,8 @@
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
                                         <li>{{ text }}<strong>
-                                                {% if parameters is not null %}{{ parameters[j] }}{% endif %}
-                                                {% if parameters is not null %}{{ proces[j] }}{% endif %}
+                                                {% if parameters[j] is defined %}{{ parameters[j] }}{% endif %}
+                                                {% if proces[j] is defined %}{{ proces[j] }}{% endif %}
                                                 </strong>
                                     </li>
                                     {% endfor %}
