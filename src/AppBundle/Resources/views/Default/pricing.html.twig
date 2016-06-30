@@ -30,10 +30,11 @@
                 {% for article in menu.article %}
                     {% set i = i + 2 %}
                     {% set textes = [article.body|split(',')] %}
-                    {% set parameters = parameters|merge([article.icon|split(',')]) %}
+                    {% set parameters =[article.icon|split(',')] %}
                     {% set proces = proces|merge([article.footer|split(',')]) %}
+                    {{ dump(textes) }}
                     {{ dump(parameters) }}
-                    {{ dump(parameters) }}
+                    {{ dump(proces) }}
                     <div data-wow-delay=".{{ i }}s" class="col-md-4 col-sm-8 wow fadeInLeft">
                         <div class="pricing-widget">
                             <div class="pricing-head">{{ article.title }}</div>
