@@ -44,11 +44,12 @@
                                     {% set j = 0 %}
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
-                                        <li>{{ text }}<strong>
+                                        {{ dump(text) }}
+                                        <{#li>{{ text }}<strong>
                                                 {% if parameters is not null %}{{ parameters[j] }}{% endif %}
                                                 {% if parameters is not null %}{{ proces[j] }}{% endif %}
                                                 </strong>
-                                    </li>
+                                    </li>#}
                                     {% endfor %}
                                     {#<li>Bandwidth per month <strong>100 GB</strong>
                                     </li>
