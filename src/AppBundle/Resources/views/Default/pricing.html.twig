@@ -23,15 +23,15 @@
             {% if menu.article is not null %}
 
                 {% set items = {} %}
-                {% set textes = [] %}
-                {% set parameters = [] %}
-                {% set proces = [] %}
+                {#{% set textes = [] %}#}
+                {#{% set parameters = [] %}#}
+                {#{% set proces = [] %}#}
                 {% set i = 0 %}
                 {% for article in menu.article %}
                     {% set i = i + 2 %}
-                    {% set textes = [article.body|split(',')] %}
-                    {% set parameters =[article.icon|split(',')] %}
-                    {% set proces = [article.footer|split(',')] %}
+                    {% set textes = article.body|split(',') %}
+                    {% set parameters = article.icon|split(',') %}
+                    {% set proces = article.footer|split(',') %}
                     <div data-wow-delay=".{{ i }}s" class="col-md-4 col-sm-8 wow fadeInLeft">
                         <div class="pricing-widget">
                             <div class="pricing-head">{{ article.title }}</div>
