@@ -29,15 +29,11 @@
                     {% set textes = article.body|split(',') %}
                     {% set parameters = article.icon|split(',') %}
                     {% set proces = article.footer|split(',') %}
-                    <div data-wow-delay=".{{ i }}s" class="col-md-4 col-sm-8 wow fadeInLeft">
+                    <div data-wow-delay=".{{ i }}s" class="col-md-6 col-sm-12 wow fadeInLeft">
                         <div class="pricing-widget">
                             <div class="pricing-head">{{ article.title }}</div>
                             <div class="pricing-body">
-                                {#<div class="pricing-cost"><strong style="display: block">$19</strong><small>per month</small>
-                                </div>#}
                                 <ul class="pricing-list text-center">
-                                    {#<li><a class="btn btn-sm btn-default">Start your free trial!</a>
-                                    </li>#}
                                     {% set j = 0 %}
                                     {% for text in textes %}
                                         {% set j = j + 1 %}
@@ -47,16 +43,6 @@
                                                 </strong>
                                     </li>
                                     {% endfor %}
-                                    {#<li>Bandwidth per month <strong>100 GB</strong>
-                                    </li>
-                                    <li>No. of email accounts <strong>1</strong>
-                                    </li>
-                                    <li>No. of MySql database <strong>1</strong>
-                                    </li>
-                                    <li>24/7 Unlimited Support <strong>YES</strong>
-                                    </li>
-                                    <li>Support Tickets per month <strong>1</strong>#}
-                                    </li>
                                     <li class="text-center"><a href="#" class="btn btn-primary">Buy Now</a>
                                     </li>
                                 </ul>
