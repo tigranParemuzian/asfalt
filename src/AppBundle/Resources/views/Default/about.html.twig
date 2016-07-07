@@ -51,7 +51,8 @@
             <div class="col-lg-6">
                 <div id="owl-about1" class="owl-carousel owl-theme">
                     {% for art in slider %}
-                    <div class="item"><img src="{{ art.getDownloadLink }}" alt="" class="img-responsive" />
+                    <div class="item">
+                        <img src="{{ art.getDownloadLink }}" alt="" class="img-responsive" />
                     </div>
                     {% endfor %}
                 </div>
