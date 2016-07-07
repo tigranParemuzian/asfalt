@@ -97,26 +97,18 @@ class DefaultController extends Controller
 
         return $menu;
     }
+
+
     /**
-     * This action generate pages by menu slug
-     *
-     * @Route("/page/{slug}", name="singlePage")
+     * @Template()
      * @param $slug
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return array
      */
-    public function pageAction($slug)
+    public function contactAction($slug)
     {
-        // get entity manager
         $em = $this->getDoctrine()->getManager();
-        // get data
-        $data = $em->getRepository('AppBundle:Menu')->findOneBySlug($slug);
+        $menu = $em->getRepository('AppBundle:Menu')->findOneBySlug($slug);
 
-        if(!$data)
-        {
-            return $this->redirect($this->generateUrl('sonata_admin_dashboard'));
-        }
-
-        return $this->render("@App/Default/page.html.twig", array('data' => $data) );
-
+        return $menu;
     }
 }
