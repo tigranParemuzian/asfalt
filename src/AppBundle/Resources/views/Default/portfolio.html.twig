@@ -36,7 +36,7 @@
 
                 <div id="filters">
                     <ul class="list-unstyled">
-                        <li><a href="javascript:;" data-filter="*" class="active"><h3>All</h3></a>
+                        <li><a href="javascript:;" data-filter="*" class="active"><h3>Все</h3></a>
                         </li>
                         {% for category in categores %}
                         <li><a href="javascript:;" data-filter=".{{ category|lower|replace({' ':'_'}) }}"><h3>{{ category }}</h3></a>
