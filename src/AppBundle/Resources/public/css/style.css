@@ -13,4 +13,8 @@ body.dark-layout #uslughi .row.list-services .col-lg-4 {
     padding: 0 10% 0 !important;
     }
 
+    .mobile-hide{
+        display: none;
+    }
 }
+
