@@ -25,7 +25,7 @@ class ArticleAdmin extends Admin
             ->tab('General')
                 ->with('General')
                     ->add('title')
-                    ->add('icon', 'text', array('help'=>'<p>for icons libery use <a href="http://madmin.swlabs.co/#/ui-icons"> Icons </a></p>'))
+                    ->add('icon', 'text', array('required'=>false,'help'=>'<p>For icons examples use <a href="http://madmin.swlabs.co/#/ui-icons" target="_blank"> Icons </a></p>'))
                     ->add('body', 'textarea', array('label' => 'Body'))
                     ->add('footer')
                     ->add('position')
