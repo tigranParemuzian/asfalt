@@ -1,0 +1,16 @@
+{% block icon_type_widget %}
+
+    {% set object = form.parent.vars.value %}
+
+    {% set filename = object.filename %}
+    {% if filename %}
+        <a href="#" data-toggle="modal" data-target="#imagemodal" class="icon-type-widget">
+            <input type="hidden" value="{{ object.fileOriginalName }}">
+            <img  height="50" width="50" src="{{ object.downloadLink }}">
+        </a>
+        <a href="{{ path('remove_image', {'filename' : filename, 'object' : object.className  }) }}">
+            <span class="glyphicon glyphicon-remove"></span></a>
+    {% else %}
+        {{ form_widget(form) }}
+    {% endif %}
+{% endblock icon_type_widget %}

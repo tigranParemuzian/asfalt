@@ -47,7 +47,7 @@ twig:
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
     form:
-        resources: ['bootstrap_3_layout.html.twig', 'SonataCoreBundle:Form:datepicker.html.twig', 'SonataCoreBundle:Form:colorpicker.html.twig']
+        resources: ['bootstrap_3_layout.html.twig', 'SonataCoreBundle:Form:datepicker.html.twig', 'SonataCoreBundle:Form:colorpicker.html.twig', 'AppBundle:Form:icon.html.twig']
 
 # Assetic Configuration
 assetic:

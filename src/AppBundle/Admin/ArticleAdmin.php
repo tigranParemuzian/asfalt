@@ -30,7 +30,7 @@ class ArticleAdmin extends Admin
                     ->add('footer')
                     ->add('position')
                     ->add('groupName')
-                    ->add('file', 'ad_file_type', array('required' => false, 'label'=>'Ad image'))
+                    ->add('file', 'icon_type', array('required' => false, 'label'=>'Ad image'))
                     ->add('menu')
                 ->end()
             ->end()
@@ -62,6 +62,7 @@ class ArticleAdmin extends Admin
             ->addIdentifier('footer')
             ->addIdentifier('position')
             ->addIdentifier('groupName')
+            ->add('fileOriginalName')
             ->add('menu')
             ->add('_action', 'actions', array(
                 'actions' => array(

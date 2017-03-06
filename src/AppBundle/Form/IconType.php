@@ -1,8 +1,6 @@
 <?php
-
 namespace AppBundle\Form;
-
-
+use AppBundle\Entity\MenuItom;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,6 +23,18 @@ class IconType extends AbstractType
      */
     public function getName()
     {
-        return 'ad_file_type';
+        return 'icon_type';
     }
+
+//    /**
+//     * @param OptionsResolver $resolver
+//     */
+//    public function setDefaultOptions(OptionsResolver $optionsResolver)
+//    {
+//        parent::configureOptions($optionsResolver);
+//
+//        $optionsResolver->setDefaults(array(
+//            'data_class' => 'AppBundle\Trade\Documents'
+//        ));
+//    }
 }

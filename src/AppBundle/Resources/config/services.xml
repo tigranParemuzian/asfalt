@@ -20,7 +20,7 @@
         </service>
 
         <service id="app.form.type.file" class="AppBundle\Form\IconType">
-            <tag name="form.type" alias="ad_file_type"  />
+            <tag name="form.type" alias="icon_type"  />
         </service>
 
 

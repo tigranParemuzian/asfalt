@@ -108,4 +108,46 @@ class DefaultController extends Controller
 
         return $menu;
     }
+
+    /**
+     * @Route("/remove-image/{filename}/{object}", name="remove_image")
+     * @Security("has_role('ROLE_SUPER_ADMIN', 'ROLE_USER')")
+     * @param $filename
+     * @param $object
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function removeImageAction($filename, $object)
+    {
+        try{
+            // get entity manager
+            $em = $this->getDoctrine()->getManager();
+
+            // get object by className
+            $object = $em->getRepository($object)->findOneBy(array('fileName' => $filename));
+
+            // get origin file path
+            $filePath = $object->getAbsolutePath() . $object->getFileName();
+
+            // get doctrine
+            $em = $this->getDoctrine()->getManager();
+
+            // check file and remove
+            if (file_exists($filePath) && is_file($filePath)){
+                unlink($filePath);
+            }
+
+            $object->setFileName(null);
+            $object->setFileOriginalName(null);
+
+            $em->persist($object);
+            $em->flush();
+
+            return $this->redirect($_SERVER['HTTP_REFERER']);
+        }
+        catch(\Exception $e){
+            throw $e;
+        }
+
+    }
 }
