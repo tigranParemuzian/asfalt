@@ -51,7 +51,8 @@
         <ul id="gallery-full-width" class="list-unstyled">
             {% for item in items %}
             <li class="element-item {{item.groupName|lower|replace({' ':'_'})}}">
-                <a href="{{ item.getDownloadLink }}" data-lightbox="{{item.title|lower|replace({' ':'_'})}}" data-title="{{ item.title|lower }}" class="gallery-image"><img src="{{ item.getDownloadLink }}" alt="{{ item.title|lower }}" class="img-responsive" />
+                <a href="{{ item.getDownloadLink }}" data-lightbox="{{item.title|lower|replace({' ':'_'})}}" data-title="{{ item.title|lower }}" class="gallery-image">
+                    <img src="{{ item.getDownloadLink }}" alt="{{ item.title|lower }}" class="img-responsive image-gall" />
                     <div class="gallery-overlay">
                         <div class="thumb-info">
                             <h3>{{ item.title }}</h3>

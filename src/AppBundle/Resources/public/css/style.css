@@ -7,7 +7,7 @@ body.dark-layout #uslughi .row.list-services .col-lg-4 {
 .pricing-body > ul > li {
     min-height: 60px;
 }
-.gallery-image .img-responsive{
+.image-gall{
     height: 245px;
     object-fit: cover;
 }
@@ -35,3 +35,34 @@ body.dark-layout #uslughi .row.list-services .col-lg-4 {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+#tocall {
+    display: inline;
+     position: fixed;
+     bottom: 6%;
+     right: 1.5%;
+     z-index: 9999;
+     background: transparent;
+     border: 2px solid #f25d4f;
+     -webkit-border-radius: 5px !important;
+     -moz-border-radius: 5px !important;
+     border-radius: 5px !important;
+     height: 50px;
+     width: 50px;
+     text-align: center;
+ }
+
+#tocall i{
+    color: #f25d4f;
+    line-height: 43px;
+    font-size: 33px;
+}
+#tocall:hover {
+    color: #ffffff;
+    background-color: #f25d4f;
+    border:  transparent ;
+}
+#tocall:hover i {
+    color: #ffffff;
+}
+
