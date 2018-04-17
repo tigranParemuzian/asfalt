@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% set meta_title = [] %}
+{% set meta_description = [] %}
+{% set main_directions = [] %}
+{% set privileges = [] %}
+{% set homeTitle = [] %}
+{% set homeCitation = [] %}
+
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+
+ {% for key, setting in settings %}
+
+     {% if 'meta-title' in setting.slug %}
+         {% set meta_title = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'meta-description' in setting.slug %}
+         {% set meta_description = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'home-title' in setting.slug %}
+         {% set homeTitle = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'home-citation' in setting.slug %}
+         {% set homeCitation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'main-directions' in setting.slug %}
+         {% set main_directions = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'privileges' in setting.slug %}
+         {% set privileges = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% endif %}
+
+ {% endfor %}
+
+ {% block meta_seo %}
+     <meta content="" name="description"/>
+     <meta content="" name="keywords"/>
+     <meta content="http://merx.usavin.com" name="author"/>
+     <meta property="og:title" content="{{ meta_title.value }}"/>
+     <meta property="og:type" content="website"/>
+     <meta property="og:url" content="{{ path(app.request.get('_route')) }}"/>
+     <meta property="og:image" content="{{ asset('bundles/app/img/logo.png') }}"/>
+     <meta property="og:description"
+           content="{{ meta_description.value }}"/>
+     <meta property="og:image:width" content="1800"/>
+     <meta property="og:image:height" content="945"/>
+ {% endblock %}
+
+{% block header %}
+    <!-- Particlesground header -->
+    <header class="header" >
+    </header>
+{% endblock header %}
+
+{% block content %}
+
+    {% if main_directions|length >0 %}
+
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':main_directions.objectClass, 'objectId':main_directions.id } ))|json_decode %}
+
+
+        {% set name = [] %}
+        {% set citation = [] %}
+        {% set directions = [] %}
+        {% for setting in settings %}
+            {% if 'name' in setting.slug %}
+                {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+            {% elseif 'citation' in setting.slug %}
+                {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+            {% elseif 'direction' in setting.slug %}
+                {% set directions = directions|merge([render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode]) %}
+            {% endif %}
+        {% endfor %}
+
+
+
+        <section class="section icons-section">
+            <div class="container">
+                <h2 class="center"><span class="main-color">{{ name.value }}</span></h2>
+                <h6 class="center">{{ citation.value }}</h6>
+
+                <div class="row direction-flex">
+
+                    {% if directions|length > 0 %}
+                        {% set name = [] %}
+                        {% set citation = [] %}
+                        {% set icon = [] %}
+                        {% set url = [] %}
+
+                        {% for direction in directions %}
+
+                            {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':direction.objectClass, 'objectId':direction.id } ))|json_decode %}
+                            {% for sett in settings %}
+                                {% if 'name' in sett.slug %}
+                                    {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                                {% elseif 'citation' in sett.slug %}
+                                    {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                                {% elseif 'icon' in sett.slug %}
+                                    {% set icon = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                                {% elseif 'url' in sett.slug %}
+                                    {% set url = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="col-lg-8 col-xl-4">
+                                <div class="item">
+                                    <div class="icon">
+                                        <a href="{{ url.value }}">
+                                            <img src="{{ asset(icon.downloadLink) }}" alt="{{ name.value|replace({' ': '-'}) }}">
+                                        </a>
+                                    </div>
+                                    <h4 class="title"><a href="{{ url.value }}">{{ name.value }}</a></h4>
+                                    <p>{{ citation.value }}.</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </section>
+
+    {% endif %}
+    <!-- Image section -->
+    {% if privileges|length >0 %}
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':privileges.objectClass, 'objectId':privileges.id } ))|json_decode %}
+
+        {% for key,setting in settings %}
+
+            {% set descr = [] %}
+            {% set img = [] %}
+            {% set url = [] %}
+            {% set name = [] %}
+            {% set settingsDocument = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+            {% for sett in settingsDocument %}
+                {% if 'description' in sett.slug %}
+                    {% set descr = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% elseif 'image' in sett.slug %}
+                    {% set img = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% elseif 'name' in sett.slug %}
+                    {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% elseif 'url' in sett.slug or 'uel' in sett.slug %}
+                    {% set url = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% endif %}
+            {% endfor %}
+
+            {% if key%2==0 %}
+                <section class="section grey-section image-section">
+                    <div class="row">
+                        <div class="col-lg-6 image item" style="background-image:url('{{ asset(img.downloadLink)|lbImageFilter('list_big') }}')">
+                            <img src="{{ asset(img.downloadLink)|lbImageFilter('list_smal') }}" class="img-responsive" alt="{{ name.value }}">
+                        </div>
+                        <div class="col-lg-6 content item">
+                            <div class="wrap">
+                                <h2>{{ name.value }}</h2>
+                                {{ descr.value|raw }}
+                                <a href="{{ url.value }}" class="btn btn1">
+                                    <div class="mask">Подробно</div>
+                                    <span>Подробно</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% else %}
+                <section class="section grey-section image-section">
+                    <div class="row">
+
+                        <div class="col-lg-6 content item">
+                            <div class="wrap">
+                                <h2>{{ name.value }}</h2>
+                                {{ descr.value|raw }}
+                                <a href="{{ url.value }}" class="btn btn1">
+                                    <div class="mask">Подробно</div>
+                                    <span>Подробно</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 image item" style="background-image:url('{{ asset(img.downloadLink)|lbImageFilter('list_big') }}')">
+                            <img src="{{ asset(img.downloadLink)|lbImageFilter('list_smal') }}" class="img-responsive" alt="{{ name.value }}">
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+    {{ render(controller('AppBundle:Rest/ParentRest:getTop')) }}
+
+{% endblock content %}
+
+{% block js %}
+    {{ parent() }}
+    {% set mainText = homeTitle.value|split(' ') %}
+    <script type="text/javascript">
+        if($( document ).width() <=992){
+            $('header.header').addClass('parallax-section').
+            attr({'data-stellar-background-ratio':"0.5"}).css({'background-image':"url({{ asset('bundles/app/img/home_mobile.png') }})"})
+                .html('<div id="dots-canvas"></div>' +
+                    '<h1>{{ mainText[0] }}&nbsp;<span class="main-color">{{ mainText[1] }}</span></h1>' +
+                    '<h4>{{ homeCitation.value }}</h4>')
+        }else {
+            $('header.header').addClass('video-header').html('' +
+                '<video playsinline  autoplay loop muted class="video" id="video-bg"><source id="video-src" src="{{ asset('bundles/app/video/video_header.mp4') }}" type="video/mp4">' +
+                '</video>' +
+                '<div id="dots-canvas"></div>' +
+                '<h1>{{ mainText[0] }}&nbsp;<span class="main-color">{{ mainText[1] }}</span></h1>' +
+                '<h4>{{ homeCitation.value }}</h4>')
+        }
+    </script>
+{% endblock %}

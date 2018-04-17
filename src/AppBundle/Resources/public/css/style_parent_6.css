@@ -1,0 +1,11 @@
+
+div.page-name h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: rgba(250, 250, 250, 0.01);
+    margin-bottom: 20px;
+    text-align: center;
+}
+

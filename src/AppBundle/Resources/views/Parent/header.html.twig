@@ -1,0 +1,36 @@
+
+{% set citation = [] %}
+{% set slider = [] %}
+
+{% for setting in settings %}
+    {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+    {% if obj|length >0 and obj.slug == 'citation' %}
+        {% set citation = citation|merge(obj) %}
+    {% elseif obj|length >0 and obj.slug == 'text-slider'  %}
+        {% set slider = slider|merge(obj) %}
+    {% endif %}
+{% endfor %}
+<div class="fixed-text">
+    <div class="w-container slider-container">
+        <div class="first_text" data-ix="fade-from-left">{{ citation.value }}</div>
+        <div class="dots_line" data-ix="line-from-left"></div>
+        <div class="w-slider slider_home" data-animation="outin" data-duration="800" data-infinite="1" data-delay="8000" data-autoplay="1">
+            <div class="w-slider-mask">
+
+                {% if slider|length > 0 %}
+                    {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':slider.objectClass, 'objectId':slider.id } ))|json_decode %}
+                    {% for setting in settings %}
+                        {{ render(controller('AppBundle:Rest/ParentRest:get', {'objectClass':setting.toClassName, 'objectId':setting.toId, 'toClassType':setting.toClassType})) }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="w-slider-arrow-left hide-arrow">
+                <div class="w-icon-slider-left"></div>
+            </div>
+            <div class="w-slider-arrow-right hide-arrow">
+                <div class="w-icon-slider-right"></div>
+            </div>
+            <div class="w-slider-nav w-round slide-nav"></div>
+        </div><a class="button slider" href="#about" data-ix="pop-up-7">tell me more</a>
+    </div>
+</div><!-- end slider -->

@@ -1,0 +1,46 @@
+<!-- Latest news -->
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+{% set citation = [] %}
+{% set name = [] %}
+{% for key, setting in settings %}
+    {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+    {% if 'citation' in obj.slug %}
+        {% set citation = citation|merge(obj) %}
+    {% elseif 'name' in obj.slug %}
+        {% set name = name|merge(obj) %}
+    {% endif %}
+{% endfor %}
+<section class="section blog-section">
+    <div class="container">
+        <h2 class="center">{#Latest #}<span class="main-color">{{ name.value }}</span></h2>
+        <h6 class="center">{{ citation.value }}</h6>
+
+        {% if top_products|length >0 %}
+        <div class="row blog-flex">
+            {% for top in top_products %}
+            <div class="col-md-6 col-md-6 col-xl-4">
+                <div class="item">
+                    <a href="{{ path('asphalt_single', {'slugType':top.type.slug , 'slugAsphalt':top.slug}) }}" class="thumbnail">
+                        <img src="{{ asset(top.downloadLink)|lbImageFilter('new_list') }}" alt="{{ top.name }}">
+                        <span class="categories">{{ top.name }}</span>
+                    </a>
+                    <div class="content">
+                        <a href="{{ path('asphalt_single', {'slugType':top.type.slug , 'slugAsphalt':top.slug}) }}"><h4 class="title">{{ top.title }}</h4></a>
+
+                        <p>{{ top.description|slice(0,200) }}</p>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+       {# <div class="btn-wrap">
+            <a href="#" class="btn btn1 ">
+                <div class="mask">View All</div>
+                <span>View All</span>
+            </a>
+        </div>#}
+    </div>
+</section>

@@ -1,167 +1,244 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <header class="bg-video">
-        <div class="bg-overlay pattern">
-            {% block  menu %}
-                <nav role="navigation" class="navbar navbar-custom navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header page-scroll">
-                        <button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                        </button><a id="logo" href="/" class="navbar-brand"><span>Асфальт</span>Москве</a><a class="navbar-brand mobile-hide" href="tel:+‎79032708285">‎+7 903 270 82 85</a>
-                    </div>
+{% set meta_title = [] %}
+{% set meta_description = [] %}
+{% set main_directions = [] %}
+{% set privileges = [] %}
+{% set homeTitle = [] %}
+{% set homeCitation = [] %}
 
-                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                        {{ knp_menu_render('AppBundle:Builder:mainMenu', {'template': 'AppBundle:Menu:knp_menu.html.twig', 'currentAsLink': false, 'id':'navigation'}) }}
-                    </div>
-                </div>
-            </nav>
-            {% endblock  menu %}
-            {% block home %}
-                {{ render(controller('AppBundle:Default:main', { 'slug': 'glavnoie'})) }}
-            {% endblock home %}
-        </div>
-    </header>
-    {% block aboutUs %}
-        {{ render(controller('AppBundle:Default:about', { 'slug': 'o-nas'})) }}
-    {% endblock aboutUs %}
-    {% block services %}
-        {{ render(controller('AppBundle:Default:services', { 'slug': 'uslughi'})) }}
-    {% endblock services %}
-    <section id="banner" class="section-content section-parallax">
-        <div class="bg-overlay pattern">
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+
+ {% for key, setting in settings %}
+
+     {% if 'meta-title' in setting.slug %}
+         {% set meta_title = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'meta-description' in setting.slug %}
+         {% set meta_description = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'home-title' in setting.slug %}
+         {% set homeTitle = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'home-citation' in setting.slug %}
+         {% set homeCitation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'main-directions' in setting.slug %}
+         {% set main_directions = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% elseif 'privileges' in setting.slug %}
+         {% set privileges = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+         {% set settings = settings|slice(key) %}
+     {% endif %}
+
+ {% endfor %}
+
+ {% block meta_seo %}
+     <meta content="" name="description"/>
+     <meta content="" name="keywords"/>
+     <meta content="http://merx.usavin.com" name="author"/>
+     <meta property="og:title" content="{{ meta_title.value }}"/>
+     <meta property="og:type" content="website"/>
+     <meta property="og:url" content="{{ path(app.request.get('_route')) }}"/>
+     <meta property="og:image" content="{{ asset('bundles/app/img/logo.png') }}"/>
+     <meta property="og:description"
+           content="{{ meta_description.value }}"/>
+     <meta property="og:image:width" content="1800"/>
+     <meta property="og:image:height" content="945"/>
+ {% endblock %}
+
+{% block main_citation %}
+    <section class="intro">
+        <div class="intro-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-10">
-                        <h2>Асфальт цена<span> Москве </span> и Московской Области !</h2>
-                        <p>Сильное техническое поддержка по асфальтирование и Аренда спецтехники.</p>
-                    </div>
-                    <div class="col-lg-2"><a href="#tsieny" class="btn btn-primary btn-outlined btn-block"><i class="fa fa-shopping-cart mrm"></i>Асфальт цена</a>
+                    <div class="col-lg-12">
+                        <div id="slide-intro">
+                            <h1>Все
+                                <div id="rotate">
+                                    {% set parts = homeTitle.value|split('|') %}
+                                    {% for part in parts %}
+                                        <div>{{ part }}</div>
+                                    {% endfor %}
+                                </div>
+                            </h1>
+                            <p class="intro-text">{{ homeCitation.value }}</p>
+                        </div>
+                        <div class="section-next page-scroll"><a href="#about" class="btn btn-circle"><i class="fa fa-angle-down"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-  {#  <section id="skills" class="section-content">
+{% endblock %}
+
+{% block content %}
+    {% if main_directions|length >0 %}
+
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':main_directions.objectClass, 'objectId':main_directions.id } ))|json_decode %}
+
+
+        {% set name = [] %}
+        {% set citation = [] %}
+        {% set directions = [] %}
+        {% for setting in settings %}
+            {% if 'name' in setting.slug %}
+                {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+            {% elseif 'citation' in setting.slug %}
+                {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+            {% elseif 'direction' in setting.slug %}
+                {% set directions = directions|merge([render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode]) %}
+            {% endif %}
+        {% endfor %}
+
+    <section id="about" class="section-content">
         <div class="container">
             <div class="row mbxxl">
                 <div class="col-lg-12">
-                    <h2 class="section-heading">Our <span>Skills</span></h2>
+                    {% set first = name.value|split(' ')[0] %}
+                    <h2 class="section-heading">{{ first }}<span>{{ name.value|replace({'Наши' : ' '}) }}</span></h2>
+                    <div class="line"></div>
+                    <p class="section-description">{{ citation.value }}</p>
+                </div>
+            </div>
+
+        {% if directions|length > 0 %}
+            {% set name = [] %}
+            {% set citation = [] %}
+            {% set icon = [] %}
+            {% set url = [] %}
+            <div class="row">
+            {% for kay, direction in directions %}
+
+                {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':direction.objectClass, 'objectId':direction.id } ))|json_decode %}
+                {% for sett in settings %}
+                    {% if 'name' in sett.slug %}
+                        {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                    {% elseif 'citation' in sett.slug %}
+                        {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                    {% elseif 'icon' in sett.slug %}
+                        {% set icon = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                    {% elseif 'url' in sett.slug %}
+                        {% set url = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                    {% endif %}
+                {% endfor %}
+
+                <div data-wow-delay="0.{{- kay+2 -}}s" class="col-lg-3 mbl wow flipInY">
+                    <a href="{{ url.value }}">
+                        <div class="icon">
+                            <img src="{{ asset(icon.downloadLink)|lbImageFilter('list_icon') }}">
+                        </div>
+                    </a>
+                    <h3>{{ name.value }}</h3>
+                    <p>{{ citation.value }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if privileges|length >0 %}
+    <section id="about-1" class="section-content">
+        <div class="container">
+            <div class="row mbxxl">
+                <div class="col-lg-12">
+                    <h2 class="section-heading">What we <span>do</span></h2>
                     <div class="line"></div>
                     <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
             </div>
+
             <div class="row">
+
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':privileges.objectClass, 'objectId':privileges.id } ))|json_decode %}
+
+        {% set img = [] %}
+        {% set data = [] %}
+
+        {% for key,setting in settings %}
+
+            {% set descr = [] %}
+            {% set url = [] %}
+            {% set name = [] %}
+
+            {% set settingsDocument = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+            {% for sett in settingsDocument %}
+                {% if 'description' in sett.slug %}
+                    {% set descr = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% elseif 'image' in sett.slug %}
+                    {% set img = img|merge([render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode]) %}
+                {% elseif 'name' in sett.slug %}
+                    {% set name = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% elseif 'url' in sett.slug or 'uel' in sett.slug %}
+                    {% set url = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':sett.toClassName, 'objectId':sett.toId } ))|json_decode %}
+                {% endif %}
+            {% endfor %}
+
+            {% set data = data|merge([{'descr':descr, 'name':name, 'url':url}]) %}
+
+            {% endfor %}
+
                 <div class="col-lg-6">
-                    <div class="progress">
-                        <div data-percent="70" class="progress-bar pull-right"><span>Wordpress <span class='pull-left'>70%</span></span>
+                    <div id="owl-about1" class="owl-carousel owl-theme">
+                        {% for im in img %}
+                        <div class="item"><img src="{{ asset(im.downloadLink)|lbImageFilter('list_gallery') }}" alt="" class="img-responsive" />
                         </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="60" class="progress-bar pull-right"><span>Mobile Apps <span class='pull-left'>60%</span></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="80" class="progress-bar pull-right"><span>Software <span class='pull-left'>80%</span></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="50" class="progress-bar pull-right"><span>Web Desgin <span class='pull-left'>50%</span></span>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+
                 <div class="col-lg-6">
-                    <div class="progress">
-                        <div data-percent="60" class="progress-bar"><span>Html & Css <span class='pull-right'>60%</span></span>
+                    <div id="accordion-support" class="panel-group">
+                        {% for key,dat in data %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion-support" href="#collapse{{- key -}}">
+                                        {{ dat['name'].value }}</a></h4>
+                            </div>
+                            <div id="collapse{{- key -}}" class="panel-collapse collapse {{ key==0? 'in' : '' }}">
+                                <div class="panel-body"><a href="{{- dat['url'].value -}}">{{ dat['descr'].value|raw }}</a></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="90" class="progress-bar"><span>Photoshop <span class='pull-right'>90%</span></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="50" class="progress-bar"><span>Illustrator <span class='pull-right'>50%</span></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div data-percent="60" class="progress-bar"><span>Photography <span class='pull-right'>60%</span></span>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="clients" class="section-content section-parallax">
+{% endif %}
+    <section id="about-2" class="section-content section-parallax">
         <div class="bg-overlay pattern">
             <div class="container">
                 <div class="row mbxxl">
                     <div class="col-lg-12">
-                        <h2 class="section-heading">What <span>Clients</span> Say</h2>
-                        <div class="line"></div>
+                        <h2 class="section-heading">What our fun <span>factors</span></h2>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div id="owl-our-clients" class="owl-carousel">
-                            <div class="item">
-                                <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget leo nunc, nec tempus mi? Curabitur id nisl mi, ut vulputate urna. Quisque porta facilisis tortor, vitae bibendum velit fringilla vitae! Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    <cite>Raymond Webb</cite>
-                                </blockquote>
-                            </div>
-                            <div class="item">
-                                <blockquote>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae consequatur aut perferendis doloribus.
-                                    <cite>Bryan Carpenter</cite>
-                                </blockquote>
-                            </div>
-                            <div class="item">
-                                <blockquote>Donec non dui laoreet, tempor quam non, convallis eros. Aliquam blandit scelerisque nibh nec egestas. Suspendisse eu mauris pretium, molestie tortor non, ultrices leo. Suspendisse nulla turpis, pulvinar ac eleifend sit amet, gravida vel neque. Donec nec porta eros.
-                                    <cite>Lawrence Miller</cite>
-                                </blockquote>
-                            </div>
-                            <div class="item">
-                                <blockquote>Aliquam ac diam eleifend, fermentum nisi sit amet, semper ipsum. Pellentesque vel accumsan nisi. Cras quis nibh eleifend, ultricies magna sed, blandit arcu. Donec consequat varius tortor in suscipit.
-                                    <cite>Rebecca Welch</cite>
-                                </blockquote>
-                            </div>
-                        </div>
+                    <div data-value="1350" class="col-lg-3 text-center mbl fact">
+                        <h2 class="factor">1350</h2>
+                        <h3 class="factor-desc">Projects</h3>
+                    </div>
+                    <div data-value="720" class="col-lg-3 text-center mbl fact">
+                        <h2 class="factor">720</h2>
+                        <h3 class="factor-desc">Day Worked</h3>
+                    </div>
+                    <div data-value="350" class="col-lg-3 text-center mbl fact">
+                        <h2 class="factor">350</h2>
+                        <h3 class="factor-desc">Staffs</h3>
+                    </div>
+                    <div data-value="150" class="col-lg-3 text-center mbl fact">
+                        <h2 class="factor">150</h2>
+                        <h3 class="factor-desc">Clients</h3>
                     </div>
                 </div>
             </div>
         </div>
-    </section>#}
-    {% block portfolio %}
-        {{ render(controller('AppBundle:Default:portfolio', { 'slug': 'raboti'})) }}
-    {% endblock portfolio %}
-    {% block pricing %}
-        {{ render(controller('AppBundle:Default:pricing', { 'slug': 'tsieny'})) }}
-    {% endblock pricing %}
-   {# <section id="newsletter" class="section-content section-parallax">
-        <div class="bg-overlay pattern">
-            <div class="container">
-                <div class="row mbxxl">
-                    <div class="col-lg-12">
-                        <h2 class="section-heading">Our <span>Newsletter</span></h2>
-                        <div class="line"></div>
-                        <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-lg-offset-3">
-                        <form action="" class="form-newsletter">
-                            <div class="input-group input-group-lg">
-                                <input type="text" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-primary">Subscribe</button></span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>#}
-    {% block contact %}
-        {{ render(controller('AppBundle:Default:contact', { 'slug': 'kontakty'})) }}
-    {% endblock contact %}
-{% endblock %}
+    </section>
 
-{% block stylesheets %}
-
-{% endblock %}
+{% endblock content %}

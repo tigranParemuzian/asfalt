@@ -1,0 +1,14 @@
+<!-- FUNFACTS SECTION -->
+<section class="section-facts">
+    <div class="w-row funfacts-row">
+        {% for key, setting in settings %}
+        {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+        <div class="w-col w-col-2 team-column">
+            <h3><span class="timer" data-from="0" data-to="{{ obj.value|replace({"%": ''}) }}" data-speed="15000">{{ obj.value }}</span>{{ '%' in obj.value ? '%' : ''  }}</h3>
+            <div class="fun-line"></div>
+            <div class="sub-text">{{ obj.title }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</section><!-- end funfacts section -->

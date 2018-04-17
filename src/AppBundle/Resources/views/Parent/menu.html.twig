@@ -1,0 +1,105 @@
+
+<nav role="navigation" class="navbar navbar-custom navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a id="logo" href="{{ path('homepage') }}" class="navbar-brand"><span>Асфальт</span>Москве</a>
+            <a class="navbar-brand mobile-hide" href="tel:+&lrm;79032708285">&lrm;+7 903270 8285</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav main-menu">
+                    <li class="page-scroll"><a href="{{ path('homepage') }}">Главное</a></li>
+                    <li class="page-scroll"><a href="{{ path('about_us') }}">О нас</a></li>
+                    <li class="page-scroll"><a href="{{ path('asphalting_list') }}" data-hover="dropdown">Дорожные строительство</a>
+                        <ul class="dropdown-menu">
+                            {% for asph in asphalt_parent %}
+                            <li><a href="{{ path('asphalt_type', {'slug':asph.slug}) }}"><i class="fa fa-road"></i>{{ asph.name }}</a>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="page-scroll"><a href="{{ path('rent_equipments') }}" data-hover="dropdown">Аренда спецтехники</a>
+                        <ul class="dropdown-menu">
+                            {% for asph in equipment_parent %}
+                            <li><a href="{{ path('asphalt_type', {'slug':asph.slug}) }}"><i class="fa fa-truck"></i>{{ asph.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="page-scroll"><a href="{{ path('priceing') }}">Цены</a>
+                    </li>
+                    <li class="page-scroll"><a href="#contact">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{#
+<nav class="nav main-nav">
+    <div class="container">
+        <div class="menu-flex">
+            <div class="logo">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('bundles/app/img/logo.png') }}" alt="Logo">
+                </a>
+            </div>
+            <div class="menu-toggle">
+                <div class="menu-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <div class="menu-wrap">
+                <ul class="menu">
+                    <li class="menu-item "><a href="{{ path('homepage') }}">Главное</a></li>
+                    <li class="menu-item">
+                        <a href="{{ path('about_us') }}">О нас</a>
+                    </li>
+                    <li class="menu-item menu-item-has-children"><a href="{{ path('asphalting_list') }}">Дорожные строительство</a>
+                        <ul class="sub-menu">
+                            {% for asph in asphalt_parent %}
+                                <li class="menu-item "><a href="{{ path('asphalt_type', {'slug':asph.slug}) }}">{{ asph.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="menu-item menu-item-has-children">
+                        <a href="{{ path('rent_equipments') }}">Аренда спецтехники</a>
+                        <ul class="sub-menu">
+                            {% for asph in equipment_parent %}
+                                <li class="menu-item "><a href="{{ path('asphalt_type', {'slug':asph.slug}) }}">{{ asph.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                    <li class="menu-item menu-item-has-children"><a href="blog-wide.html">Цены</a>
+                        <ul class="sub-menu">
+                            <li class="menu-item "><a href="blog-wide.html">Blog Wide</a></li>
+                            <li class="menu-item "><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
+                            <li class="menu-item menu-item-has-children "><a href="blog-single.html">Post single</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item  "><a href="blog-single.html">Standart post</a></li>
+                                    <li class="menu-item  "><a href="video-single.html">Video post</a></li>
+                                    <li class="menu-item  "><a href="gallery-single.html">Gallery post</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item menu-item-has-children"><a href="portfolio.html">Работи</a>
+                        <ul class="sub-menu">
+                            <li class="menu-item "><a href="portfolio.html">Portfolio Wide</a></li>
+                            <li class="menu-item "><a href="portfolio-masonry.html">Работи</a></li>
+                            <li class="menu-item "><a href="portfolio-single.html">Цены</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item "><a href="{{ path('priceing') }}">Цены</a>
+                    <li class="menu-item buyer phone"><a href="#contact"><i class="fa fa-phone" ></i>&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>#}

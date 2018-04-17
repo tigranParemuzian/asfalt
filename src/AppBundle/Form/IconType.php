@@ -23,18 +23,13 @@ class IconType extends AbstractType
      */
     public function getName()
     {
-        return 'icon_type';
+        return 'icon';
     }
 
-//    /**
-//     * @param OptionsResolver $resolver
-//     */
-//    public function setDefaultOptions(OptionsResolver $optionsResolver)
-//    {
-//        parent::configureOptions($optionsResolver);
-//
-//        $optionsResolver->setDefaults(array(
-//            'data_class' => 'AppBundle\Trade\Documents'
-//        ));
-//    }
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults( array(
+            'belongs_to'=>false
+        ));
+    }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Traits;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This traits is used for include file
@@ -16,7 +17,7 @@ trait File
 {
 
     /**
-     * @Assert\Image()
+     * @Assert\File()
      */
     protected  $file;
 
@@ -29,6 +30,19 @@ trait File
      * @ORM\Column(name="file_name", type="string", length=255, nullable=true)
      */
     protected $fileName;
+
+    protected $uploadDir = 'uploads';
+
+    protected $path = 'files';
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->file = null;
+        $this->fileOriginalName = null;
+        $this->fileName = null;
+        // TODO: Implement __clone() method.
+    }
 
     /**
      * Sets file.
@@ -105,13 +119,13 @@ trait File
      * This function is used to return file web path
      *
      * @VirtualProperty()
-     * @Groups({"user-info", "cars_list"})
+     * @Groups({"user-info", "cars_list", "finance"})
      *
      * @return string
      */
     public function getDownloadLink()
     {
-        return '/' . $this->getUploadDir() . '/' . $this->getPath() . '/' . $this->fileName;
+        return $this->fileName ? '/' . $this->getUploadDir() . '/' . $this->getPath() . '/' . $this->fileName : '' ;
     }
 
     /**
@@ -137,7 +151,7 @@ trait File
      */
     protected function getPath()
     {
-        return 'images';
+        return $this->path;
     }
 
     /**
@@ -147,7 +161,7 @@ trait File
      */
     protected function getUploadDir()
     {
-        return 'uploads';
+        return $this->uploadDir;
     }
 
     /**
@@ -158,6 +172,8 @@ trait File
      */
     public function uploadFile()
     {
+        ini_set('memory_limit', '-1');
+        
         // the file property can be empty if the field is not required
         if (null == $this->getFile())
         {
@@ -204,16 +220,6 @@ trait File
         if (file_exists($filePath) && is_file($filePath)){
             unlink($filePath);
         }
-    }
-
-
-    /**
-     * This function is used to get object class name
-     *
-     * @return string
-     */
-    public function getClassName(){
-        return get_class($this);
     }
 
 }

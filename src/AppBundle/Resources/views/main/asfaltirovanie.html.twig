@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% set citation = [] %}
+{% set banner = [] %}
+{% set asphaltType = [] %}
+
+
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+    {% for key, setting in settings %}
+        {% if 'citation' in setting.slug %}
+            {#{% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}#}
+
+            {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'banner' in setting.slug %}
+            {% set banner = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'asphalt-type' in setting.slug %}
+            {% set asphaltType = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% endif %}
+    {% endfor %}
+
+
+{% block meta_seo %}
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="http://merx.usavin.com" name="author"/>
+    <meta property="og:title" content="{{ metaTitle|length >0 ? metaTitle.value : 'asphaltkiev.ua' }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.asphalt.kiev.ua"/>
+    <meta property="og:image" content="{{- 'http://'~host -}}{{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/asphalt-kiev-big-black.png') }}"/>
+    <meta property="og:description"
+          content="{{ metaDescription|length >0 ? metaDescription.value : 'asphaltkiev.ua' }}"/>
+    <meta property="og:image:width" content="1800"/>
+    <meta property="og:image:height" content="945"/>
+{% endblock %}
+
+
+{% block header %}
+
+  {#  {{ dump(citation) }}
+    {{ dump(banner) }}
+    {{ dump(asphaltType) }}#}
+    <!-- Particlesground header -->
+    <header class="page-header parallax-section " data-stellar-background-ratio="0.5"
+            style="background-image: url({{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/header4.jpg')|lbImageFilter('banner_home') }});">
+        <div class="container">
+            <h1>{{ data.name|capitalize }}</h1>
+            <ul id="breadcrumbs" class="breadcrumbs">
+                <li class="item-home">
+                    <a class="bread-link bread-home" href="{{ path('homepage') }}" title="Главное">Главное</a>
+                </li>
+                <li class="separator separator-home"><span class="delimiter"> | </span></li>
+                <li class="item-current item-95"><span class="bread-current ">{{ data.name }}</span>
+                </li>
+               {% if citation|length >0 %} <li class="item-current item-95"><span class="bread-current ">{{- citation.value -}}</span>
+                </li>{% endif %}
+            </ul>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    {% if asphaltType|length >0 %}
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':asphaltType.objectClass, 'objectId':asphaltType.id } ))|json_decode %}
+        {% for key,setting in settings %}
+
+            {% set document = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+            {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':document.objectClass, 'objectId':document.id } ))|json_decode %}
+
+            {% set description = [] %}
+            {% set image = [] %}
+            {% for setting in settings %}
+
+                {% set object = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+                {% if 'text' in object.slug %}
+                    {% set description = object %}
+                {% elseif 'image' in object.slug %}
+                    {% set image = object %}
+                {% endif %}
+            {% endfor %}
+
+                <section class="section grey-section image-section">
+                <div class="row">
+                    {#{{ dump(key%2) }}#}
+
+                    {% if key%2==0 %}
+                    <div class="col-lg-6 image item" style="background-image:url({{ asset(image.downloadLink) }})">
+                            <img src="{{ asset(image.downloadLink) }}" class="img-responsive" alt="">
+                        </div>
+
+                    <div class="col-lg-6 content item">
+                        <div class="wrap">
+                            <h2>{{ document.title|capitalize }}</h2>
+                            {{ description.value|raw }}
+                            <a href="#" class="btn btn1">
+                                <div class="mask">Подробно</div>
+                                <span>Подробно</span>
+                            </a>
+                        </div>
+                    </div>
+                        {% else %}
+                    <div class="col-lg-6 content item">
+                        <div class="wrap">
+                            <h2>{{ document.title|capitalize }}</h2>
+                            {{ description.value|raw }}
+                            <a href="#" class="btn btn1">
+                                <div class="mask">Подробно</div>
+                                <span>Подробно</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 image item" style="background-image:url({{ asset(image.downloadLink) }})">
+                        <img src="{{ asset(image.downloadLink) }}" class="img-responsive" alt="">
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,60 @@
+<!-- TESTIMONIALS SECTION -->
+{% set citation = '' %}
+{% set documents = [] %}
+
+
+{% for setting in settings %}
+    {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+    {% if obj|length >0 and 'citation' in obj.slug %}
+        {% set citation = obj.value %}
+    {% endif %}
+    {% if obj|length >0 and obj.formType == 'document' %}
+        {% set documents = documents|merge([obj]) %}
+    {% endif %}
+{% endfor %}
+<section class="testimonials-section">
+    <div class="w-container container">
+        <h2>{{ citation }}</h2>
+        <div class="hero-line"></div>
+        <div class="w-slider testimonials-slider" data-animation="cross" data-duration="500" data-infinite="1" data-hide-arrows="1" data-easing="ease-in-out">
+            <div class="w-slider-mask slidermask">
+                {% for document in documents %}
+
+                {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':document.objectClass, 'objectId':document.id } ))|json_decode %}
+                    {% set review = '' %}
+                    {% set name = '' %}
+                    {% set website = '' %}
+
+                    {% for key, setting in settings %}
+                        {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+                        {% if 'review' in obj.slug %}
+                            {% set review = obj.value %}
+                        {% elseif 'name' in obj.slug  %}
+                            {% set name = obj.value %}
+                        {% elseif 'last-name' in obj.slug  %}
+                            {% set name = obj.value %}
+                        {% elseif 'website' in obj.slug  %}
+                            {% set website = obj.value %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="w-slide">
+                        <div class="text-testimonials"><!-- slide 1 -->
+                            <div class="textimonials-say">{{ review }}</div>
+                            <div class="testimonials-name">{{ name }} {% if website|length >0 %}– <span class="testimonials-website">{{ website }}</span>{% endif %}</div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+            <div class="w-slider-arrow-left">
+                <div class="w-icon-slider-left left-arrow"></div>
+            </div>
+            <div class="w-slider-arrow-right">
+                <div class="w-icon-slider-right right-arrow"></div>
+            </div>
+        </div>
+    </div>
+</section><!-- end testimonials section -->

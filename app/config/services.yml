@@ -1,10 +1,212 @@
 # Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
+# http://symfony.com/doc/current/service_container.html
 parameters:
-#    parameter_name: value
+    #parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+ # default configuration for services in *this* file
+#    _defaults:
+#        # automatically injects dependencies in your services
+#        autowire: true
+#        # automatically registers your services as commands, event subscribers, etc.
+#        autoconfigure: true
+#        # this means you cannot fetch services directly from the container via $container->get()
+#        # if you need to do this, you can override this setting on individual services
+#        public: false
+#
+#    # makes classes in src/AppBundle available to be used as services
+#    # this creates a service per class whose id is the fully-qualified class name
+#    AppBundle\:
+#        resource: '../../src/AppBundle/*'
+#        # you can exclude directories or files
+#        # but if a service is unused, it's removed anyway
+#        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+#
+#    # controllers are imported separately to make sure they're public
+#    # and have a tag that allows actions to type-hint services
+#    AppBundle\Controller\:
+#        resource: '../../src/AppBundle/Controller'
+#        public: true
+#        tags: ['controller.service_arguments']
 
+#    AppBundle\Form\:
+#        resource: '../../src/AppBundle/Form'
+#        public: true
+#        tags: ['controller.service_arguments']
+
+    sitemap.listner:
+        class: AppBundle\EventListener\SitemapListener
+        arguments:
+            - '@router'
+            - '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: "presta.sitemap.listener"}
+
+    app.listener.compression:
+        class: AppBundle\EventListener\CompressionListener
+        arguments:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+#toDo: services
+    app.document.settings:
+        class: AppBundle\Service\CRUDDocunets
+        arguments: [ '@service_container']
+        public: true
+
+#todo: form types:
+
+    app.settings.form.type:
+        class: AppBundle\Form\SettingsType
+        tags:
+            - { name: form.type, alias: app_bundle_settings_type }
+        public: true
+
+    app.bundle.text:
+        class: AppBundle\Form\TextType
+        tags:
+            - { name: form.type, alias: app_bundle_text }
+        public: true
+
+    app.bundle.parameters:
+        class: AppBundle\Form\ParametersType
+        tags:
+            - { name: 'form.type', alias: app_bundle_parameters }
+        public: true
+
+    app.bundle.document:
+        class: AppBundle\Form\DocumentType
+        tags:
+            - { name: form.type, alias: app_bundle_document }
+        public: true
+
+    app.bundle.documents_list:
+        class: AppBundle\Form\DocumentsListType
+        tags:
+            - { name: form.type, alias: app_bundle_documents_list }
+        public: true
+
+    app.bundle.file:
+        class: AppBundle\Form\FileType
+        tags:
+            - { name: form.type, alias: app_bundle_file }
+        public: true
+
+
+    app.form.type.gender:
+        class: AppBundle\Form\IconType
+        tags:
+            - { name: form.type, alias: icon_type }
+
+    app.form.type.files:
+        class: AppBundle\Form\FileFormType
+        tags:
+            - { name: form.type, alias: file_form_type }
+
+
+    app.form.contact.files:
+        class: AppBundle\Form\ContactType
+        tags:
+            - { name: form.type, alias: app_bundle_contact }
+
+#toDo: admin Block
+
+    sonata.admin.block.project.list:
+          class: AppBundle\Block\CustomMosaicAdminBlock
+          arguments:
+            - "Admin Projects List"
+            - "@templating"
+            - "@sonata.admin.pool"
+          tags:
+            - { name: sonata.block }
+
+#TODO: admin part
+
+    app.admin.page:
+          class: AppBundle\Admin\PageAdmin
+          arguments: [~, AppBundle\Entity\Pages, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Menu, label: Page, show_in_dashboard: false }
+
+    app.admin.document:
+          class: AppBundle\Admin\DocumentAdmin
+          arguments: [~, AppBundle\Entity\Document, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Menu, label: Document, show_in_dashboard: false }
+
+    app.admin.documents.list:
+          class: AppBundle\Admin\DocumentsListAdmin
+          arguments: [~, AppBundle\Entity\DocumentsList, AppBundle\CustomAdmin]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Menu, label: Documents List, show_in_dashboard: false }
+
+    app.admin.unit:
+          class: AppBundle\Admin\UnitAdmin
+          arguments: [~, AppBundle\Entity\Unit, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Menu, label: Units, show_in_dashboard: false }
+
+    app.admin.asphaltings:
+          class: AppBundle\Admin\AsphaltingAdmin
+          arguments: [~, AppBundle\Entity\Asphalting, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Asphalting, label: Asphalting, show_in_dashboard: false }
+
+    app.admin.asphalting.types:
+          class: AppBundle\Admin\AsphaltingTypesAdmin
+          arguments: [~, AppBundle\Entity\AsphaltingTypes, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Asphalting, label: Types, show_in_dashboard: false }
+
+    app.admin.equipments:
+          class: AppBundle\Admin\EquipmentsAdmin
+          arguments: [~, AppBundle\Entity\Equipments, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Equipments, label: Equipments, show_in_dashboard: false }
+
+    app.admin.equipment.types:
+          class: AppBundle\Admin\EquipmentTypesAdmin
+          arguments: [~, AppBundle\Entity\EquipmentTypes, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Equipments, label: Types, show_in_dashboard: false }
+
+
+    app.admin.equipment.price:
+          class: AppBundle\Admin\EquipmentsPriceAdmin
+          arguments: [~, AppBundle\Entity\EquipmentsPrice, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Equipments, label: Price, show_in_dashboard: false }
+
+
+    app.admin.asphalting.price:
+          class: AppBundle\Admin\AsphaltingPriceAdmin
+          arguments: [~, AppBundle\Entity\AsphaltingPrice, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: Asphalting, label: Price, show_in_dashboard: false }
+
+
+    app.admin.user:
+          class: AppBundle\Admin\UserAdmin
+          arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: User, label: User, show_in_dashboard: false }
+
+
+#TODO: Twig extantions
+    app.image_filter.twig_extension:
+          class: AppBundle\Twig\Extension\ImageFilterExtension
+          arguments:
+              - '@service_container'
+          tags:
+              - { name: 'twig.extension' }
+          public: false
+
+    twig.extension.sortbyfield:
+            class: AppBundle\Twig\Extension\SortByFieldExtension
+            tags:
+                - { name: 'twig.extension' }
+
+    json_decode.twig.extension:
+          class: AppBundle\Twig\Extension\JsonDecodeExtension
+          tags:
+              - {name: 'twig.extension' }

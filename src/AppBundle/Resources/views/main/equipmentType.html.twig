@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% set citation = [] %}
+{% set banner = [] %}
+{% set asphaltType = [] %}
+{% set asphaltType = [] %}
+{% set metaTitle = [] %}
+{% set metaDescription = [] %}
+
+
+{% block meta_seo %}
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="http://merx.usavin.com" name="author"/>
+    <meta property="og:title" content="{{ data.metaTitle|length >0 ? data.metaTitle : 'asphaltkiev.ua' }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.asphalt.kiev.ua"/>
+    <meta property="og:image" content="{{- 'http://'~host -}}{{ asset(data.downloadLink|length >0 ? data.downloadLink : 'bundles/app/img/asphalt-kiev-big-black.png') }}"/>
+    <meta property="og:description"
+          content="{{ data.metaDescription|length >0 ? data.metaDescription : 'asphaltkiev.ua' }}"/>
+    <meta property="og:image:width" content="1800"/>
+    <meta property="og:image:height" content="945"/>
+{% endblock %}
+
+
+{% block header %}
+    <!-- Particlesground header -->
+    <header class="page-header parallax-section " data-stellar-background-ratio="0.5"
+            style="background-image: url({{ asset(data.downloadLink |length >0 ? data.downloadLink : 'bundles/app/img/header4.jpg') }});">
+        <div class="container">
+            <h1>{{ data.name }}</h1>
+            <ul id="breadcrumbs" class="breadcrumbs">
+                <li class="item-home">
+                    <a class="bread-link bread-home" href="{{ path('homepage') }}" title="Главное">Главное</a>
+                </li>
+                <li class="separator separator-home"><span class="delimiter"> | </span></li>
+                <li class="item-current item-95"><span class="bread-current ">{{ data.name }}</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+{% endblock header %}
+
+
+{% block content %}
+
+<section class="section services">
+    <div class="container">
+        <h2 class="center"><span class="main-color">{{ data.name }}</span></h2>
+        <h6 class="center">{{ data.description }}</h6>
+    </div>
+</section>
+
+    {% for key,asphalt in data.asphalting %}
+    <section class="section grey-section image-section">
+        <div class="row">
+            {% if key%2==0 %}
+            <div class="col-lg-6 content item">
+                <div class="wrap">
+                    <h2>{{ asphalt.name }}</h2>
+                    <p>{{ asphalt.description }}</p>
+                    <a href="{{ path('asphalt_single', {'slugType':data.slug, 'slugAsphalt':asphalt.slug}) }}" class="btn btn1">
+                        <div class="mask">Подробно</div>
+                        <span>Подробно</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 image item" style="background-image:url({{ asset(asphalt.downloadLink) }})">
+                <img src="{{ asset(asphalt.downloadLink) }}" class="img-responsive" alt="{{ asphalt.name }}">
+            </div>
+            {% else %}
+                <div class="col-lg-6 image item" style="background-image:url({{ asset(asphalt.downloadLink) }})">
+                    <img src="{{ asset(asphalt.downloadLink) }}" class="img-responsive" alt="{{ asphalt.name }}">
+                </div>
+                <div class="col-lg-6 content item">
+                    <div class="wrap">
+                        <h2>{{ asphalt.name }}</h2>
+                        <p>{{ asphalt.description }}</p>
+                        <a href="{{ path('asphalt_single', {'slugType':data.slug, 'slugAsphalt':asphalt.slug}) }}" class="btn btn1">
+                            <div class="mask">Подробно</div>
+                            <span>Подробно</span>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endfor %}
+
+{% endblock %}

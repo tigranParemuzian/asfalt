@@ -1,0 +1,21 @@
+{% block app_bundle_documents_list_widget %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_widget(form.title) }}
+            {{ form_widget(form.slug) }}
+            {{ form_widget(form.sortOrdering) }}
+            <div class="hidden">
+                {{ form_widget(form.created) }}
+                {{ form_widget(form.updated) }}
+            </div>
+            {% if form.fromSettings is defined %}
+                {{ form_widget(form.fromSettings) }}
+
+            {% else %}
+                <a href="{{ path('admin_app_document_edit', {'id':form.vars.value.id}) }}">add settings</a>
+            {% endif %}
+            {% if is_granted('ROLE_SONATA_ADMIN') %}<a href="{{ path('admin_app_documentslist_edit', {'id':form.vars.value.id}) }}">Add documents in {{ form.vars.value.title }}</a>{% endif %}
+            {{ form_widget(form.formType) }}
+        </div>
+    </div>
+{% endblock app_bundle_documents_list_widget %}

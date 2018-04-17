@@ -1,115 +1,250 @@
 <!DOCTYPE html>
-{% block angularApp %} <html lang="ru"> {% endblock %}
+<html lang="ru">
+
+{% set host = app.request.server.get('HTTP_HOST') %}
+<!-- Mirrored from andriy-differ.tk/elenor/home-particlesground.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 24 Dec 2017 13:22:08 GMT -->
 <head>
-    <title>{% block title %}Асфальтирование в Москве и Московской Области.{% endblock %}</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Работы по асфальтированию, укладки плитки, установки бортовых камней ведуться квалифицированными специалистами, которые имеют огромный опыт.">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="Thu, 19 Nov 1900 08:52:00 GMT">
-    <link rel="shortcut icon" href="madmin/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="madmin/images/icons/favicon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="madmin/images/icons/favicon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="madmin/images/icons/favicon-114x114.png">
-    <!--Loading bootstrap css-->
-    <link type="text/css" rel="stylesheet"
-          href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
-    <link type="text/css" rel="stylesheet"
-          href="{{ asset('madmin/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/bootstrap/css/bootstrap.min.css') }}">
-    <!--LOADING STYLESHEET FOR PAGE--><!--Loading style vendors-->
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/animate.css/animate.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/jquery-lightbox/css/lightbox.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/owl-carousel/owl-carousel/owl.carousel.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/owl-carousel/owl-carousel/owl.theme.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/vendors/jquery-circliful/css/jquery.circliful.css') }}">
-    <!--Loading style-->
-    <link type="text/css" rel="stylesheet" href="{{ asset('madmin/frontend/assets/css/themes/orange.css') }}" id="theme-change" class="style-change color-change">
+    {% block meta %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-transcluent">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-title" content="Asphalt Kiev">
+        <meta name="application-name" content="Asphalt Kiev">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        {% block meta_seo %}
+            <meta content="" name="description"/>
+            <meta content="" name="keywords"/>
+            <meta content="http://merx.usavin.com" name="author"/>
+            <meta property="og:title" content="Асфальтирование Kiev"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" content="http://www.asphalt.kiev.ua"/>
+            <meta property="og:image" content="{{- 'http://'~host -}}{{- asset('bundles/app/img/asphalt-kiev-big-black.png') -}}"/>
+            <meta property="og:description"
+                  content="Асфальтирование / Kiev"/>
+            <meta property="og:image:width" content="1800"/>
+            <meta property="og:image:height" content="945"/>
+        {% endblock %}
+    {% endblock meta %}
+    <title>{% block title %}Asphalt Moscow{% endblock %}</title>
 
-    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}">
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+
+        <!--Loading bootstrap css-->
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+
+        {% stylesheets
+        'template/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css'
+        'template/vendors/font-awesome/css/font-awesome.min.css'
+        'template/vendors/bootstrap/css/bootstrap.min.css'
+
+        'template/vendors/animate.css/animate.css'
+        'template/vendors/jquery-lightbox/css/lightbox.css'
+        'template/vendors/owl-carousel/owl-carousel/owl.carousel.css'
+        'template/vendors/owl-carousel/owl-carousel/owl.theme.css'
+        'template/vendors/jquery-circliful/css/jquery.circliful.css'
+         output="bundles/app/css/style.css"
+
+        filter='cssrewrite'
+        %}
+
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+        {#<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/app/css/style.css') }}"/>#}
+        <link type="text/css" rel="stylesheet" href="{{ asset('template/css/themes/style1/orange-blue.css') }}" id="theme-change" class="style-change color-change">
+        <link type="text/css" rel="stylesheet" href="{{ asset('template/frontend/assets/css/themes/orange.css') }}" id="theme-change" class="style-change color-change">
+
+    {% endblock %}
 </head>
-
-<body id="glavnoie" data-spy="scroll" data-target=".navbar-custom" class="frontend-one-page dark-layout">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom" class="frontend-one-page dark-layout">
 <!--BEGIN PAGE LOADER-->
-<div id="page-loader"><img src="http://swlabs.co/images/icon/preloader.gif" alt="" />
-</div>
+{#<div id="page-loader"><img src="http://swlabs.co/images/icon/preloader.gif" alt="" />#}
+{#</div>#}
 <!--END PAGE LOADER-->
-<!--BEGIN BACK TO TOP--><a id="tocall" href="tel:+‎79032708285"><i class="fa fa-phone"></i></a>
+<!--BEGIN BACK TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
 <!--END BACK TO TOP-->
 <!--BEGIN CONTENT-->
 
-{% block body %}
+{#{% block navebar %}#}
+    {#<!-- Navigation -->#}
+    {#{{ render(controller('AppBundle:Rest/ParentRest:getMenu')) }}#}
+{#{% endblock %}#}
+{% block header %}
+    <header class="bg-video">
+        <div class="bg-overlay pattern">
+            {% block menu %}
+                {{ render(controller('AppBundle:Rest/ParentRest:getMenu')) }}
+            {% endblock menu %}
+            {% block main_citation %}
+            <section class="intro">
+                <div class="intro-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="slide-intro">
+                                    <h1>We love<div id="rotate"><div>Creativity</div><div>Innovation</div><div>Clean & Modern</div></div></h1>
+                                    <p class="intro-text">We have been working very hard to design the new version of our site. Finally it's ready. It comes with a lot of new features</p>
+                                </div>
+                                <div class="section-next page-scroll"><a href="#about" class="btn btn-circle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endblock %}
+        </div>
+    </header>
+{% endblock header %}
 
-{% endblock body %}
+{% block content %}
 
+{% endblock %}
+{% block subscribe %}
+
+{% endblock %}
+
+{% block contact %}
+    <!-- Form -->
+    {{ render(controller('AppBundle:Main:contact')) }}
+
+    <!-- Google map -->
+   {# <section id="contact" class="section-content">
+        <div class="container">
+            <div class="row mbxxl">
+                <div class="col-lg-12">
+                    <h2 class="section-heading"><span>Contact</span> Us</h2>
+                    <div class="line"></div>
+                    <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+        <div id="map" data-wow-delay=".1s" style="width: 100%;height: 400px;" class="wow fadeIn"></div>
+        <div class="container">
+            <form action="#">
+                <div class="row mtxxl">
+                    <div class="col-lg-6">
+                        <h3 class="title">О НАС</h3>
+                        <table class="tb-info-us table-striped mbl">
+                            <tbody>
+                            <tr>
+                                <td>Company:</td>
+                                <td>Swlabs</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>contact@email.com</td>
+                            </tr>
+                            <tr>
+                                <td>Fax:</td>
+                                <td>(123) 456-7890</td>
+                            </tr>
+                            <tr>
+                                <td>Adress:</td>
+                                <td>8186 Mckinley Ave</td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td>(987) 654-3210</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="social"><a href="#" class="ico-socialize-twitter1 ico-socialize type2 ico-lg"><i class="fa fa-twitter"></i></a><a href="#" class="ico-socialize-facebook1 ico-socialize type2 ico-lg"><i class="fa fa-facebook"></i></a><a href="#" class="ico-socialize-google2 ico-socialize type2 ico-lg"><i class="fa fa-google-plus"></i></a><a href="#" class="ico-socialize-dribbble1 ico-socialize type2 ico-lg"><i class="fa fa-twitter"></i></a><a href="#" class="ico-socialize-youtube1 ico-socialize type2 ico-lg"><i class="fa fa-youtube"></i></a><a href="#" class="ico-socialize-pinterest ico-socialize type2 ico-lg"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-6 mbm">
+                                <input type="text" placeholder="Full Name" class="form-control input-lg" />
+                            </div>
+                            <div class="col-lg-6 mbm">
+                                <input type="text" placeholder="E-mail Address" class="form-control input-lg" />
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="text" placeholder="Subject" class="form-control input-lg" />
+                            </div>
+                            <div class="col-lg-12">
+                                <textarea placeholder="Message" rows="5" class="form-control input-lg mtm"></textarea>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>#}
+{% endblock %}
 {% block footer %}
-<footer>
-    <div class="container">
-        <p class="text-center"><a href="http://risetechs.com/">Developed by Rise Technologies © 2016</a></p>
-    </div>
-</footer>
-{% endblock footer %}
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="text-center">©2014 MerxForum - Responsive Development </p>
+        </div>
+    </footer>
+{% endblock %}
+<!-- Up button -->
+{#<div class="up">#}
+{#<div class="fa fa-angle-up"></div>#}
+{#</div>#}
+<!-- Up button -->
+<div class="call">
+    <a href="tel:+380681469889"><div class="fa fa-phone"></div></a>
+</div>
+{% block js %}
 
-{% block javascript %}
+    <!--END CONTENT-->
+    {% javascripts
+    'template/js/jquery-1.10.2.min.js'
+    'template/js/jquery-migrate-1.2.1.min.js'
+    'template/js/jquery-ui.js'
+    'template/vendors/bootstrap/js/bootstrap.min.js'
+    'template/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js'
+    'template/js/html5shiv.js'
+    'template/js/respond.min.js'
+    'template/vendors/isotope/dist/isotope.pkgd.min.js'
+    'template/vendors/jquery.hoverdir.js'
+    'template/vendors/modernizr.custom.97074.js'
+    'template/vendors/jquery-lightbox/js/lightbox.min.js'
+    'template/vendors/owl-carousel/owl-carousel/owl.carousel.min.js'
+    'template/vendors/jquery-circliful/js/jquery.circliful.min.js'
+    'template/frontend/assets/js/jquery.appear.js'
+    'template/frontend/assets/plugins/jquery-wow/wow.min.js'
+    'template/frontend/assets/plugins/jquery-videoBG/jquery.videoBG.js'
+    'template/frontend/assets/js/one-page_video.js'
+    'template/frontend/assets/js/one-page_animated.js'
+    'template/frontend/assets/js/jquery-text-effect.js'
+    'template/js/frontend-one-page.js'
+    output='bundles/app/js/base.js'
+    %}
 
+    <script src="{{ asset_url }}"></script>
 
+    {% endjavascripts %}
+    {#<script type="text/javascript" src="{{ asset('bundles/app/js/base.js') }}"></script>#}
 
-    <script src="{{ asset('madmin/js/jquery-1.10.2.min.js') }}"></script>
-    <script src="{{ asset('madmin/js/jquery-migrate-1.2.1.min.js') }}"></script>
-    <script src="{{ asset('madmin/js/jquery-ui.js') }}"></script>
-    <!--loading bootstrap js-->
-    <script src="{{ asset('madmin/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js') }}"></script>
-    <script src="{{ asset('madmin/js/html5shiv.js') }}"></script>
-    <script src="{{ asset('madmin/js/respond.min.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/isotope/dist/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/jquery.hoverdir.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/modernizr.custom.97074.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/jquery-lightbox/js/lightbox.min.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAu6tm60TzeUo9rWpLnrQ7mrFn4JPMVje4&amp;sensor=false"></script>
-    {#<script src="http://maps.google.com/maps/api/js?sensor=true"></script>#}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATNztJYcZfP7Y5JJ2SREcBsw7xd6zhbbA&amp;sensor=false"></script>
 
-    {#<script src="{{ asset('madmin/vendors/gmaps/gmaps.js') }}"></script>#}
-    {#<script src="{{ asset('madmin/js/page-contact.js') }}"></script>#}
-
-    <script src="{{ asset('madmin/vendors/owl-carousel/owl-carousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('madmin/vendors/jquery-circliful/js/jquery.circliful.min.js') }}"></script>
-    <!--Loading script for each page-->
-    <script src="{{ asset('madmin/frontend/assets/js/jquery.appear.js') }}"></script>
-    <script src="{{ asset('madmin/frontend/assets/plugins/jquery-wow/wow.min.js') }}"></script>
-    <script src="{{ asset('madmin/frontend/assets/plugins/jquery-videoBG/jquery.videoBG.js') }}"></script>
-    {#<script src="{{ asset('madmin/frontend/assets/js/one-page_video.js') }}"></script>#}
-
-    <script type="text/javascript">
-        $(function() {
-            $('.bg-video').videoBG({
-                mp4:'madmin/frontend/assets/plugins/jquery-videoBG/assets/tunnel_animation.mp4',
-                ogv:'madmin/frontend/assets/plugins/jquery-videoBG/assets/tunnel_animation.ogv',
-                webm:'madmin/frontend/assets/plugins/jquery-videoBG/assets/tunnel_animation.webm',
-                poster:'madmin/frontend/assets/plugins/jquery-videoBG/assets/tunnel_animation.jpg',
-                scale:true
-            });
-            $('.intro, header').css('height', $(".videoBG_wrapper").height());
-        });
-    </script>
-    <script src="{{ asset('madmin/frontend/assets/js/one-page_animated.js') }}"></script>
-    <!--CORE JAVASCRIPT-->
-    <script src="{{ asset('madmin/frontend/assets/js/jquery-text-effect.js') }}"></script>
-    <script src="{{ asset('madmin/js/frontend-one-page.js') }}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113346760-1"></script>
+    {% if app.environment != 'dev' %}
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-        ga('create', 'UA-80448216-1', 'auto');
-        ga('send', 'pageview');
-
+        gtag('config', 'UA-113346760-1');
     </script>
-{% endblock%}
+    {% endif %}
+{% endblock %}
 </body>
+
+<!-- Mirrored from andriy-differ.tk/Asphalt Kiev/home-particlesground.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 24 Dec 2017 13:22:19 GMT -->
 </html>

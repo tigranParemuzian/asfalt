@@ -1,0 +1,86 @@
+<section class="work-section" id="project">
+    {% for key,project in projects %}
+    {% if key == 0 %}<div class="w-row w-hidden-medium work-row">{% elseif key != 0 and key%4==0 %}</div><div class="w-row w-hidden-medium work-row">{% endif %}
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo" style="background-image: url({{ asset(project.downloadLink)|lbImageFilter('product_list') }})"
+               href="{{ path('project_single', {'slug':project.slug}) }}">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out">{{ project.name }}</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-2">{{ project.title }}</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-2">
+                        <img clas="logo img-responsive" with="179" src="{{ asset('bundles/app/images/logo.png') }}"/>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% if key+1 == projects|length %}</div>{% endif %}
+    {% endfor %}
+    {#<div class="w-row w-hidden-medium work-row">
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-1" href="single-page-2.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out">PERfect portrait</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-2">by Tony Lamp</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-2" href="single-page-3.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-3">city buildings</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-4">by Clarck Smith</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-3" href="single-page-4.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-5">leopard eye</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-6">by Mary Jane</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-4" href="single-page-5.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-7">BASKET&nbsp;BALL</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-8">by Katherine Doe</div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="w-row w-hidden-medium work-row">
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-5" href="single-page-4.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-9">winter landscape</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-10">by Clrack Smith</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-6" href="single-page-3.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-11">happiness day</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-12">by Mary Jane</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-7" href="single-page-2.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-13">PAST&nbsp;CAMERA</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-14">by Katherine Doe</div>
+                </div>
+            </a>
+        </div>
+        <div class="w-col w-col-3 portfolio-row">
+            <a class="w-inline-block portfolio-photo portfolio-8" href="single-page.html">
+                <div class="portfolio-photo-overlay">
+                    <div class="portfolio-tittle" data-ix="scroll-fade-out-15">fashion woman</div>
+                    <div class="portfolio-subtittle" data-ix="scroll-fade-out-16">by Tony Lamp</div>
+                </div>
+            </a>
+        </div>
+    </div>#}
+</section><!-- end work section -->

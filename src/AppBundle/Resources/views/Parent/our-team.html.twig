@@ -1,0 +1,58 @@
+<!-- TEAM SECTION -->
+
+<section class="section-team" id="team">
+    <div class="w-container">
+        <h2 data-ix="scroll-fade-out-20">{{ data.name }}</h2>
+        <div class="hero-line" data-ix="scroll-fade-out-21"></div>
+        <div class="w-row team-row">
+
+
+            {% for setting in settings %}
+                {% set documentsList = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+                {% if documentsList|length > 0 %}
+
+                    <div class="w-col w-col-3 team-column" data-ix="scroll-fade-from-bottom"><!-- staf member 1 -->
+
+
+
+                    {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':documentsList.objectClass, 'objectId':documentsList.id } ))|json_decode %}
+                        {% set name = '' %}
+                        {% set image = [] %}
+                        {% set position = '' %}
+                        {% set description = '' %}
+                        {% set social = '' %}
+                        {% for key, setting in settings %}
+                            {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+                            {% if 'image' in obj.slug %}
+                                {% set image = image|merge(obj) %}
+                            {% elseif 'first-name' in obj.slug  %}
+                                {% set name = name~obj.value %}
+                            {% elseif 'last-name' in obj.slug  %}
+                                {% set name = name~' '~obj.value %}
+                            {% elseif 'position' in obj.slug  %}
+                                {% set position = obj.value %}
+                            {% elseif 'description' in obj.slug  %}
+                                {% set description = obj.value %}
+                            {% elseif 'social' in obj.slug  %}
+                                {% set social = obj.value %}
+                            {% endif %}
+
+                        {% endfor %}
+                        <a class="w-inline-block" href="#">
+                            <img src="{{ asset(image.downloadLink)|lbImageFilter('team_list') }}" width="200" alt="{{ name ~ ' image' }}">
+                        </a>
+                        <h5>{{ name|capitalize }}</h5>
+                        <div class="hero-work">{{ position }}</div>
+                        <div class="team-line orange"></div>
+                        <p>&nbsp;{{ description }}</p>
+                        {{ social|raw }}
+                    </div><!-- end staf member 1 -->
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="wrap-button"><a class="button" href="#contact" data-ix="scroll-pop-up">come grow with us</a>
+        </div>
+    </div><!-- end team section -->
+</section>

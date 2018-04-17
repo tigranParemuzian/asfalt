@@ -5,28 +5,148 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-         ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
-         ROLE_SUPER_ADMIN: ROLE_ADMIN
+         ROLE_CLIENT:   ROLE_USER
+         ROLE_MODERATOR:
+              - ROLE_USER
+              - ROLE_SONATA_ADMIN
+
+              # USERS
+              - ROLE_ADMIN_USERS_LIST
+              - ROLE_ADMIN_USERS_VIEW
+
+              # CHNGE_CURRENCY
+              - ROLE_ADMIN_CHNGE_CURRENCY_LIST
+              - ROLE_ADMIN_CHNGE_CURRENCY_VIEW
+
+              # admin.payment.system.currency
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_LIST
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_VIEW
+
+              # admin.change.request
+              - ROLE_ADMIN_CHANGE_REQUEST_CREATE
+              - ROLE_ADMIN_CHANGE_REQUEST_EDIT
+              - ROLE_ADMIN_CHANGE_REQUEST_LIST
+              - ROLE_ADMIN_CHANGE_REQUEST_VIEW
+
+              # admin.chat.info
+              - ROLE_ADMIN_CHAT_INFO_CREATE
+              - ROLE_ADMIN_CHAT_INFO_DELETE
+              - ROLE_ADMIN_CHAT_INFO_EDIT
+              - ROLE_ADMIN_CHAT_INFO_LIST
+              - ROLE_ADMIN_CHAT_INFO_VIEW
+
+              # admin.chat.quick.text
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_LIST
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_VIEW
+
+              #  admin.chat.topic
+              - ROLE_ADMIN_CHAT_TOPIC_LIST
+              - ROLE_ADMIN_CHAT_TOPIC_VIEW
+
+         ROLE_ADMIN:
+              - ROLE_USER
+              - ROLE_SONATA_ADMIN
+
+              # USERS
+              - ROLE_ADMIN_USERS_CREATE
+              - ROLE_ADMIN_USERS_DELETE
+              - ROLE_ADMIN_USERS_EDIT
+              - ROLE_ADMIN_USERS_LIST
+              - ROLE_ADMIN_USERS_VIEW
+
+              # CURRENCY
+              - ROLE_ADMIN_CURRENCY_CREATE
+              - ROLE_ADMIN_CURRENCY_DELETE
+              - ROLE_ADMIN_CURRENCY_EDIT
+              - ROLE_ADMIN_CURRENCY_LIST
+              - ROLE_ADMIN_CURRENCY_VIEW
+
+              # CHNGE_CURRENCY
+              - ROLE_ADMIN_CHNGE_CURRENCY_CREATE
+              - ROLE_ADMIN_CHNGE_CURRENCY_DELETE
+              - ROLE_ADMIN_CHNGE_CURRENCY_EDIT
+              - ROLE_ADMIN_CHNGE_CURRENCY_LIST
+              - ROLE_ADMIN_CHNGE_CURRENCY_VIEW
+
+              # payment.system
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CREATE
+              - ROLE_ADMIN_PAYMENT_SYSTEM_DELETE
+              - ROLE_ADMIN_PAYMENT_SYSTEM_EDIT
+              - ROLE_ADMIN_PAYMENT_SYSTEM_LIST
+              - ROLE_ADMIN_PAYMENT_SYSTEM_VIEW
+
+              # admin.change.settings
+              - ROLE_ADMIN_CHANGE_SETTINGS_CREATE
+              - ROLE_ADMIN_CHANGE_SETTINGS_DELETE
+              - ROLE_ADMIN_CHANGE_SETTINGS_EDIT
+              - ROLE_ADMIN_CHANGE_SETTINGS_LIST
+              - ROLE_ADMIN_CHANGE_SETTINGS_VIEW
+
+              # admin.payment.system.currency
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_CREATE
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_DELETE
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_EDIT
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_LIST
+              - ROLE_ADMIN_PAYMENT_SYSTEM_CURRENCY_VIEW
+
+              # admin.wex.data
+              - ROLE_ADMIN_WEX_DATA_CREATE
+              - ROLE_ADMIN_WEX_DATA_DELETE
+              - ROLE_ADMIN_WEX_DATA_EDIT
+              - ROLE_ADMIN_WEX_DATA_LIST
+              - ROLE_ADMIN_WEX_DATA_VIEW
+
+              # admin.change.request
+              - ROLE_ADMIN_CHANGE_REQUEST_CREATE
+              - ROLE_ADMIN_CHANGE_REQUEST_DELETE
+              - ROLE_ADMIN_CHANGE_REQUEST_EDIT
+              - ROLE_ADMIN_CHANGE_REQUEST_LIST
+              - ROLE_ADMIN_CHANGE_REQUEST_VIEW
+
+              # admin.chat.info
+              - ROLE_ADMIN_CHAT_INFO_CREATE
+              - ROLE_ADMIN_CHAT_INFO_DELETE
+              - ROLE_ADMIN_CHAT_INFO_EDIT
+              - ROLE_ADMIN_CHAT_INFO_LIST
+              - ROLE_ADMIN_CHAT_INFO_VIEW
+
+              # admin.chat.quick.text
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_CREATE
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_DELETE
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_EDIT
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_LIST
+              - ROLE_ADMIN_CHAT_QUICK_TEXT_VIEW
+
+              #  admin.chat.topic
+              - ROLE_ADMIN_CHAT_TOPIC_CREATE
+              - ROLE_ADMIN_CHAT_TOPIC_DELETE
+              - ROLE_ADMIN_CHAT_TOPIC_EDIT
+              - ROLE_ADMIN_CHAT_TOPIC_LIST
+              - ROLE_ADMIN_CHAT_TOPIC_VIEW
+
+
+
+         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
 
     firewalls:
-        main:
-            pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                default_target_path: /
-            logout:
-                path: /logout
-                target: /
-            anonymous:    true
-
+            main:
+                pattern: ^/
+                form_login:
+                    provider: fos_userbundle
+                    csrf_token_generator: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                    default_target_path: /admin
+                logout:
+                    path: /logout
+                    target: /
+                anonymous:    true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_SONATA_ADMIN }
+#        - { path: ^/, role: IS_AUTHENTICATED_FULLY }

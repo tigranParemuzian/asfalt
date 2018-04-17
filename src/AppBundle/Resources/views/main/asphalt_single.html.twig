@@ -1,0 +1,225 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/libs/slick.css') }}">
+{% endblock %}
+
+{% set banner = [] %}
+{% set gallery = [] %}
+{% set parentType = [] %}
+{% set otherTypes = [] %}
+{% set needed = [] %}
+{% if sugested['parent'] is defined %}
+{% set parentType = sugested['parent'] %}
+{% endif %}
+{% if sugested['otherTypes'] is defined %}
+    {% set otherTypes = sugested['otherTypes'] %}
+{% endif %}
+{% if sugested['needed'] is defined %}
+    {% set needed = sugested['needed'] %}
+{% endif %}
+
+
+{#{% set banner = [] %}
+{% set asphaltType = [] %}
+{% set asphaltType = [] %}
+{% set metaTitle = [] %}
+{% set metaDescription = [] %}#}
+
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+    {% for key, setting in settings %}
+        {% if 'gallery' in setting.slug %}
+            {% set gallery = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'banner' in setting.slug %}
+                {% set banner = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% endif %}
+    {% endfor %}
+
+{% block meta_seo %}
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="http://merx.usavin.com" name="author"/>
+    <meta property="og:title" content="{{ data.metaTitle|length >0 ? data.metaTitle : 'asphaltkiev.ua' }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.asphalt.kiev.ua"/>
+    <meta property="og:image" content="{{- 'http://'~host -}}{{ asset(banner|length >0 ? banner.downloadLink : data.downloadLink) }}"/>
+    <meta property="og:description"
+          content="{{ data.metaDescription|length >0 ? data.metaDescription : 'asphaltkiev.ua' }}"/>
+    <meta property="og:image:width" content="1800"/>
+    <meta property="og:image:height" content="945"/>
+{% endblock %}
+
+{% block title %}{{ data.name }}{% endblock %}
+
+{% block header %}
+
+    <header class="parent-header" style="background: url({{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/header4.jpg')|lbImageFilter('banner_home') }}) no-repeat center top fixed; background-size: cover">
+        <div class="bg-overlay pattern">
+            {% block menu %}
+                {{ render(controller('AppBundle:Rest/ParentRest:getMenu')) }}
+            {% endblock menu %}
+            {% block main_citation %}
+                <section class="intro">
+                    <div class="intro-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 page-name">
+                                    <h1 >{{ data.name|capitalize }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endblock %}
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+
+    <section id="portfolio" class="section-content">
+        <div class="container">
+            <div class="row mbxxl">
+                <div class="col-md-12">
+                    <h2 class="section-heading">{{ data.name }}</h2>
+                    <div class="line"></div>
+                    <p class="section-description">{{ data.description }}</p>
+
+                </div>
+            </div>
+            <div class="row">
+                {% for key,pr in data.price %}
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">{% if pr.layer is defined %}
+                                    <h5>{{ data.name }} {% if pr.layer|length>0 %} Толщина слоя {{ pr.layer }} m<sup>2</sup>{% endif %} {{ pr.value }} гр. </h5>
+                                {% else %}
+                                    <h5>{{ data.name }} аренда за {{ units[pr.state] }} {{ pr.value }} гр. </h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% set images = [] %}
+        {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':gallery.objectClass, 'objectId':gallery.id } ))|json_decode %}
+        {% for key, setting in settings %}
+            {% set images = images|merge([render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode]) %}
+        {% endfor %}
+
+        {% if images|length >0 %}
+            <div class="isotope">
+                <ul id="gallery-full-width" class="list-unstyled">
+                    {% for key,img in images %}
+                    <li class="element-item web-design">
+                        <a href="{{ asset(img.downloadLink)|lbImageFilter('gallery_single') }}" data-lightbox="{{ data.name|replace({' ':'-'}) ~'-'~key }}" data-title="{{ data.name ~' '~key }}" class="gallery-image">
+                            <img src="{{ asset(img.downloadLink)|lbImageFilter('gallery_list') }}" alt="{{ data.name }}" class="img-responsive" />
+                            <div class="gallery-overlay">
+                                <div class="thumb-info">
+                                    <h3>{{ data.name }}</h3>
+                                    {#<p class="gallery-tags">Web Design</p><i class="fa fa-picture-o"></i>#}
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if otherTypes|length >0 %}
+        <div class="container">
+            <div class="row mbxxl">
+                <div class="col-md-12">
+                    <h4 class="section-heading">Дорожные строительство</h4>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row">
+
+            {% for key, type in otherTypes  %}
+                {% if key%4==0 and key!=0 %}</div><div class="row">{% endif %}
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <a href="{{ path('asphalt_type', {'slug':type.slug}) }}">
+                            <img src="{{ asset(type.downloadLink)|lbImageFilter('grid_list') }}" alt="{{ type.name }}"/>
+                        </a>
+
+                        <div class="caption"><h3>{{ type.title }}</h3>
+
+
+                            <p><a href="{{ path('asphalt_type', {'slug':type.slug}) }}" role="button" class="btn btn-primary">Подробно</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            </div>
+        {% endif %}
+
+    </section>
+
+    {#<div class="section blog-wide blog">
+        <div class="container content-section">
+            <div class="row">
+                <div class="col-lg-8">
+
+                </div>
+
+                <div class="sidebar-wrap col-lg-4 offset-xl-1 col-xl-3">
+                    <aside class="sidebar">
+                        #}{#<div class="widget widget_categories">#}{#
+                            #}{#<h5 class="widget_title">{{ parentType.name }}</h5>#}{#
+                            #}{#<ul>#}{#
+                                #}{#{% set items = [] %}#}{#
+                                #}{#{% if parentType.asphalting is defined %}#}{#
+                                    #}{#{% set items = parentType.asphalting %}#}{#
+                                #}{#{% elseif  parentType.equipment is defined  %}#}{#
+                                    #}{#{% set items = parentType.equipment %}#}{#
+                                #}{#{% endif %}#}{#
+
+                                #}{#{% for sugest in items  %}#}{#
+                                    #}{#<li><a href="{{ path('asphalt_single', {'slugType':parentType.slug, 'slugAsphalt':sugest.slug}) }}">{{ sugest.name }}</a></li>#}{#
+                                #}{#{% endfor %}#}{#
+                            #}{#</ul>#}{#
+                        #}{#</div>#}{#
+                        #}{#{% if otherTypes|length >0 %}
+                        <div class="widget   ale_blog_widget">
+                            <h5 class="widget_title">Дорожные строительство</h5>
+                            <ul class="posts">
+                                {% for other in otherTypes %}
+                                <li>
+                                    <a href="{{ path('asphalt_type', {'slug':other.slug}) }}"><img src="{{ asset(other.downloadLink)|lbImageFilter('parent_list') }}" alt="{{ other.name }}" class="widget-posts-img"></a>
+                                    <div class="widget-posts-descr">
+                                        <a href="{{ path('asphalt_type', {'slug':other.slug}) }}" class="title">{{ other.name }}</a>
+                                        <div class="date">{{ other.title }}</div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}#}{#
+                        #}{#{% if needed|length >0 %}#}{#
+                        #}{#<div class="widget widget_tag_cloud">#}{#
+                            #}{#<h5 class="widget_title">Аренда спецтехники</h5>#}{#
+                            #}{#<div class="tagcloud">#}{#
+                                #}{#{% for need in needed %}#}{#
+                                #}{#<a href="{{ path('asphalt_type', {'slug':need.slug}) }}">{{ need.name }} </a>#}{#
+                                #}{#{% endfor %}#}{#
+                            #}{#</div>#}{#
+                        #}{#</div>#}{#
+                        #}{#{% endif %}#}{#
+                    </aside>
+                </div>
+            </div>
+
+        </div>
+    </div>#}
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+    <script src="{{ asset('bundles/app/js/libs/slick.js') }}"></script>
+{% endblock %}

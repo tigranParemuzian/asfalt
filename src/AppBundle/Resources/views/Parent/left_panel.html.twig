@@ -1,0 +1,28 @@
+<div class="mnmd-sub-col js-sticky-sidebar" role="complementary"><!-- Widget indexed posts B -->
+    <div class="mnmd-widget-indexed-posts-b mnmd-widget widget">
+        <div class="widget__title"><h4 class="widget__title-text"><span
+                        class="first-word">Popular</span> {{ page }}</h4></div>
+        <ol class="posts-list list-space-sm list-unstyled">
+            {% for item in object %}
+            <li>
+                <article class="post post--vertical cat-1">
+                    <div class="post__thumb"><a href="{{ path('product_single', {'slug':item.slug}) }}">
+                            <img src="{{ asset(item.downloadLink)|lbImageFilter('blog_left') }}"></a>
+                    </div>
+                    <div class="post__text"><a href="{{ path('product_single', {'slug':item.slug}) }}" class="post__cat cat-theme">{{ item.name }}</a>
+                        <h3 class="post__title typescale-1">
+                            <p>{{ item.description }}</p>
+                        </h3>
+                        <div class="post__meta">
+                            <time class="time published" datetime="2016-08-20T08:53+00:00"
+                                  title="August 20, 2016 at 08:53 am">
+                                $ &nbsp;{{ item.price|number_format(2, '.', ',') }} per {{ item.unit }}
+                            </time>
+                        </div>
+                    </div>
+                </article>
+            </li>
+            {% endfor %}
+        </ol>
+    </div><!-- Widget indexed posts B --><!-- Widget Most Commented -->
+</div><!-- .mnmd-sub-col -->

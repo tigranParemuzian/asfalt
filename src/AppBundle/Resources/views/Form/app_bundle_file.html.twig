@@ -1,0 +1,20 @@
+{% block app_bundle_file_widget %}
+    <div class="row">
+
+            <div class="col-md-2">
+                {{ form_widget(form.state) }}
+            </div><div class="col-md-8">
+                {{ form_widget(form.file) }}
+            </div>
+            <div class="hidden">
+                {{ form_widget(form.fileOriginalName) }}
+                {{ form_widget(form.fileName) }}
+                {{ form_widget(form.title) }}
+                {{ form_widget(form.slug) }}
+                {{ form_widget(form.sortOrdering) }}
+                {{ form_widget(form.formType) }}
+                {{ form_widget(form.created) }}
+                {{ form_widget(form.updated) }}
+            </div>
+    </div>
+{% endblock app_bundle_file_widget %}

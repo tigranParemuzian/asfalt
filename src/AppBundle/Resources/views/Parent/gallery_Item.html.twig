@@ -1,0 +1,5 @@
+{#<a href="{{ asset(element.downloadLink)|lbImageFilter('blog_list_big') }}"
+   itemprop="contentUrl" data-size="1200x675" data-caption="{{ element.title }}">
+    <img src="{{ asset(element.downloadLink)|lbImageFilter('gall_thumb') }}" itemprop="thumbnail" alt="{{ element.title }}" width="180" height="135">
+</a>#}
+<img src="{{ asset(element.downloadLink)|lbImageFilter('blog_list_big') }}" alt="{{ element.title }}">

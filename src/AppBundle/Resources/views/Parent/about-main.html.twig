@@ -1,0 +1,65 @@
+
+{% set citation = [] %}
+{% set documentsList = [] %}
+{% set privilege = [] %}
+
+{% for setting in settings %}
+    {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+    {% if obj|length >0 and 'citation' in obj.slug %}
+        {% set citation = citation|merge(obj) %}
+    {% elseif obj|length >0 and obj.slug == 'our-privileges'  %}
+        {% set documentsList = documentsList|merge(obj) %}
+    {% endif %}
+
+{% endfor %}
+
+<section class="about-section" id="about">
+    <div class="w-container about-container">
+        <h2 data-ix="scroll-fade-out-20">ABOUT MERX FORUM</h2>
+        <div class="hero-line" data-ix="scroll-fade-out-21"></div>
+            {{ citation.value|raw }}
+
+
+        {% if documentsList|length > 0 %}
+            {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':documentsList.objectClass, 'objectId':documentsList.id } ))|json_decode %}
+            {% for key, setting in settings %}
+        {% if key==0 %}<div class="w-row row-gallery"> {% elseif key!=0 and key%3==0 %} </div><div class="w-row row-gallery"> {% endif %}
+                {% set docunet = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+            <div class="w-col w-col-4 column-gallery" data-ix="pop-up">
+                {% set image = [] %}
+                {% set prviligeCitation = [] %}
+                {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':docunet.objectClass, 'objectId':docunet.id } ))|json_decode %}
+
+                        {% for setting in settings %}
+
+                            {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+                            {% if 'citation' in obj.slug %}
+                            {% set citation = citation|merge(obj) %}
+                            {% elseif 'image' in obj.slug %}
+                            {% set image = image|merge(obj) %}
+                            {% endif %}
+                        {% endfor %}
+                <img src="{{ asset(image.downloadLink)|lbImageFilter('gall_list') }}" alt="{{ citation.value }}">
+                <a class="w-inline-block galler-overlay" href="#">
+                    <div class="text-gallery">{{ citation.value }}.</div>
+                </a>
+            </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        {#<div class="w-row row-gallery">
+
+            <div class="w-col w-col-4 column-gallery" data-ix="pop-up">
+                <img src="{{ asset('bundles/app/images/gallery1.jpg') }}" alt="gallery1.jpg">
+                <a class="w-inline-block galler-overlay" href="#">
+                    <div class="text-gallery">Dolor sit amet, adispind elit.</div>
+                </a>
+            </div>
+
+        </div>#}
+
+    </div>
+</section>

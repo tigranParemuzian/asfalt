@@ -1,0 +1,29 @@
+{% block app_bundle_settings_widget %}
+    <div class="row ui-state-default">
+
+        <div class="col-md-4 col-sm-6 col-xs-6">
+            {{ form_widget(form.name) }}
+            {{ form_widget(form.fromClassName) }}
+            {{ form_widget(form.toClassName) }}
+            {{ form_widget(form.fromId) }}
+            {{ form_widget(form.toId) }}
+            {{ form_widget(form.position) }}
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-6">
+            {{ form_widget(form.toClassType) }}
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-8">
+            {{ form_widget(form.inEnabled) }}
+        </div>
+        <div class="col-md-1 col-sm-2 col-xs-4">
+            <div class="form-group">
+                <a class="btn btn-info btn-xs" type="clone" href="{{ path('rest_get_admin_clone', {'objectType': form.toClassType.vars.value|number_format , 'objectId': form.toId.vars.value|number_format }) }}">
+                    <i class="fa fa-files-o" aria-hidden="true"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock app_bundle_settings_widget %}

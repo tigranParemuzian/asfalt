@@ -1,0 +1,65 @@
+{% set citation = '' %}
+{% set documentsList = [] %}
+
+
+{% for setting in settings %}
+    {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+    {% if obj|length >0 and 'citation' in obj.slug %}
+        {% set citation = obj.value %}
+    {% elseif obj|length >0 and  'service' in obj.slug %}
+        {% set documentsList = documentsList|merge([obj]) %}
+    {% endif %}
+
+{% endfor %}
+
+<section class="service-section" id="service">
+    <div class="w-container">
+        <h2 data-ix="scroll-fade-out-20">{{ data.name }}</h2>
+        <div class="hero-line" data-ix="scroll-fade-out-21"></div>
+
+        <div class="subtex" data-ix="scroll-fade-out-22">{{ citation }}</div>
+
+        {% if documentsList|length > 0 %}
+            {% for key, docunet in documentsList %}
+
+                {% if key==0 %} <div class="w-row service-row"> {% elseif key!=0 and key%3==0 %} </div>
+                <div class="w-row service-row other"> {% endif %}
+                {# todo : get settings#}
+                {% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':docunet.objectClass, 'objectId':docunet.id } ))|json_decode %}
+
+                {% set icon = '' %}
+                {% set name = '' %}
+                {% set price = '' %}
+                {% set description = '' %}
+                    {% for key, setting in settings %}
+
+                        {% set obj = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+
+                        {% if 'icon' in obj.slug %}
+                            {% set icon = obj.value %}
+                        {% elseif 'name' in obj.slug  %}
+                            {% set name = obj.value %}
+                        {% elseif 'last-name' in obj.slug  %}
+                            {% set name = obj.value %}
+                        {% elseif 'price' in obj.slug  %}
+                            {% set price = obj.value %}
+                        {% elseif 'description' in obj.slug  %}
+                            {% set description = obj.value %}
+                        {% endif %}
+
+                    {% endfor %}
+                <div class="w-col w-col-4" data-ix="scroll-pop-up-2">
+                    <div class="icon fa {{ icon }} fa-3x"></div>
+                    <h5>{{ name }}</h5>
+                    <h5>from $&nbsp;{{ price }}</h5>
+                    <p>&nbsp;{{ description }}</p>
+                </div>
+        {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="wrap-button"><a class="button" href="#project" data-ix="scroll-pop-up">Interested? see our porjects</a>
+        </div>
+    </div>
+</section><!-- end service section -->

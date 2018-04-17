@@ -1,44 +1,42 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+parent_rest:
+    type:     rest
+    resource: AppBundle\Controller\Rest\ParentRestController
+    schemes:  [http, https]
+admin_rest:
+    type:     rest
+    resource: AppBundle\Controller\Rest\AdminController
+    schemes:  [http, https]
 
-#user_rest:
-#    type:     rest
-#    resource: AppBundle\Controller\Rest\UserController
-#
-#location_rest:
-#    type:     rest
-#    resource: AppBundle\Controller\Rest\LocationController
-#
-#booking_rest:
-#    type:     rest
-#    resource: AppBundle\Controller\Rest\BookingController
-#
-#cars_rest:
-#    type:     rest
-#    resource: AppBundle\Controller\Rest\CarsController
+PrestaSitemapBundle:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 # fos user routes
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    schemes:  [http, https]
 
-#fos_user_profile:
-#    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-#    prefix: /profile
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+    schemes:  [http, https]
 
-#fos_user_register:
-#    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-#    prefix: /register
-#
-#fos_user_resetting:
-#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-#    prefix: /resetting
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+    schemes:  [http, https]
 
-#fos_user_change_password:
-#    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-#    prefix: /profile
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+    schemes:  [http, https]
 
-#sonata user bundle routes
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+    schemes:  [http, https]
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -48,6 +46,14 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
+
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc/
+    schemes:  [http]
+
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+    schemes:  [http, https]

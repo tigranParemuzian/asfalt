@@ -1,0 +1,14 @@
+ul.select2-choices li.select2-search-field input[type="text"]{
+
+    min-width: 150px ;
+}
+
+div[is_document="is_document"] > div.form-group{
+    width: 50%;
+    float: left;
+}
+
+.form-image{
+    max-height: 200px;
+    object-fit: cover;
+}

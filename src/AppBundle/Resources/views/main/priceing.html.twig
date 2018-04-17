@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% set citation = [] %}
+{% set banner = [] %}
+{% set asphaltType = [] %}
+{% set asphaltType = [] %}
+{% set metaTitle = [] %}
+{% set metaDescription = [] %}
+
+
+{% set settings = render(controller('AppBundle:Rest/ParentRest:getSettings', {'objectClass':data.getClassName, 'objectId':data.id } ))|json_decode %}
+    {% for key, setting in settings %}
+        {% if 'citation' in setting.slug %}
+            {% set citation = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'banner' in setting.slug %}
+            {% set banner = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'meta-title' in setting.slug %}
+            {% set metaTitle = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% elseif 'meta-description' in setting.slug %}
+            {% set metaDescription = render(controller('AppBundle:Rest/ParentRest:getInfo', {'objectClass':setting.toClassName, 'objectId':setting.toId } ))|json_decode %}
+        {% endif %}
+    {% endfor %}
+
+{% block meta_seo %}
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="http://merx.usavin.com" name="author"/>
+    <meta property="og:title" content="{{ metaTitle|length >0 ? metaTitle.value : 'asphaltkiev.ua' }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.asphalt.kiev.ua"/>
+    <meta property="og:image" content="{{ 'http://'~host }}{{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/asphalt-kiev-big-black.png') }}"/>
+    <meta property="og:description"
+          content="{{ metaDescription|length >0 ? metaDescription.value : 'asphaltkiev.ua' }}"/>
+    <meta property="og:image:width" content="1800"/>
+    <meta property="og:image:height" content="945"/>
+{% endblock %}
+
+{% block title %}{{ data.name }}{% endblock %}
+
+{% block header %}
+
+    <header class="parent-header" style="background: url({{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/header4.jpg')|lbImageFilter('banner_home') }}) no-repeat center top fixed; background-size: cover">
+        <div class="bg-overlay pattern">
+            {% block menu %}
+                {{ render(controller('AppBundle:Rest/ParentRest:getMenu')) }}
+            {% endblock menu %}
+            {% block main_citation %}
+                <section class="intro">
+                    <div class="intro-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 page-name">
+                                    <h1 >{{ data.name|capitalize }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endblock %}
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+
+    <section class="section services ">
+        <div class="container ">
+            <h2 class="center"><span class="main-color">{{ data.name }}</span></h2>
+            <h6 class="center">{% if citation|length >0 %}{{- citation.value -}}
+                {% endif %}</h6>
+            <div class="row services-flex content-section">
+
+                {#{{ dump(asphaltPrice[0].asphalting) }}#}
+                {#{{ dump(equipmentPrice) }}#}
+                <div id="table">
+                    <h3>Цены по Асфальтирование</h3>
+                    <div class="scroll">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                {#<th>#</th>#}
+                                <th>Наименование работ</th>
+                                <th>Толщина слоя</th>
+                                <th>Единица измерения</th>
+                                <th>Цена, грн</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ap in asphaltPrice %}
+                                {% if  ap.isSingle == false %}
+                                <tr><td colspan="4"><h6 class="center"><a href="{{ path('asphalt_type', {'slug':ap.slug}) }}">{{ ap.name }}</a></h6></td></tr>
+                                {% for a in ap.asphalting %}
+                                    {% for p in a.price %}
+                                        <tr>
+                                            <td><a href="{{ path('asphalt_single', {'slugType':ap.slug, 'slugAsphalt':a.slug}) }}">{{ a.name }}</a></td>
+                                            <td>{{ p.layer }}</td>
+                                            <td>m<sup>2</sup></td>
+                                            <td>{{ p.value }}</td>
+                                        </tr>
+
+                                    {% endfor %}
+                                {% endfor %}
+
+                                {% else %}
+                                    {% for p in ap.price %}
+                                        <tr>
+                                            <td><a href="{{ path('asphalt_type', {'slug':ap.slug}) }}">{{ ap.name }}</a></td>
+                                            {% if p.layer|length >0 %}<td>{{ p.layer }}</td>
+                                            <td>m<sup>2</sup></td>
+                                            <td>{% else %}<td colspan="3" class="text-center">{% endif %}{{ p.value }}</td>
+                                        </tr>
+
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="table">
+                    <h3>Цены на аренду спецтехники</h3>
+                    <div class="scroll">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                {#<th>#</th>#}
+                                <th rowspan="2">Марка и модель арендуемой техники</th>
+                                <th rowspan="2">Характеристики</th>
+                                <th colspan="{{ units|length }}">Цена, грн</th>
+                            </tr>
+                                <tr>
+                                        {% for u in units %}
+                                        <th>{{ u }}</th>
+                                        {% endfor %}
+                                    </tr>
+                            </thead>
+                            <tbody>
+                            {% for eqt in equipmentPrice %}
+                                {#<tr><td colspan="{{ units|length + 2}}"><h6 class="center"><a href="{{ path('asphalt_type', {'slug':eqt.slug}) }}">{{ eqt.name|capitalize }}</a></h6></td></tr>#}
+                                {#{% for eq in eqt.equipment %}#}
+                                    <tr>
+                                        <td><a href="{{ path('asphalt_type', {'slug':eqt.slug}) }}">{{ eqt.name|capitalize }}</a></td>
+                                        <td>{{ eqt.description|slice(0,100)|capitalize }}</td>
+                                        {% for k,p in eqt.price %}
+                                                <td>{{ k==p.state ? p.value :"-"}}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {#{% endfor %}#}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
