@@ -92,9 +92,9 @@
                     <div class="col-lg-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">{% if pr.layer is defined %}
-                                    <h5>{{ data.name }} {% if pr.layer|length>0 %} Толщина слоя {{ pr.layer }} m<sup>2</sup>{% endif %} {{ pr.value }} гр. </h5>
+                                    <h5>{{ data.name }} {% if pr.layer|length>0 %} Толщина слоя {{ pr.layer }} m<sup>2</sup>{% endif %} {{ pr.value }} р. </h5>
                                 {% else %}
-                                    <h5>{{ data.name }} аренда за {{ units[pr.state] }} {{ pr.value }} гр. </h5>
+                                    <h5>{{ data.name }} аренда за {{ units[pr.state] }} {{ pr.value }} р. </h5>
                                 {% endif %}
                             </div>
                         </div>
