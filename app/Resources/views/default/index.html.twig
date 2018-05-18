@@ -124,12 +124,12 @@
                     {% endif %}
                 {% endfor %}
 
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <a href="{{ url.value }}">
                             <img src="{{ asset(icon.downloadLink)|lbImageFilter('grid_list') }}"/>
                         </a>
-                        <div class="caption"><h3 class="text-black">{{ name.value|capitalize }}</h3>
+                        <div class="caption"><h3 class="text-black card-header">{{ name.value|capitalize }}</h3>
                             <p>{{ citation.value|slice(0, 150) ~ '...' }}</p>
                             <p><a href="{{ url.value }}" role="button" class="btn btn-primary">Подробно</a></p>
                         </div>

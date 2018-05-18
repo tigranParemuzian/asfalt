@@ -3,6 +3,10 @@
     display: none;
 }
 
+h3.card-header {
+    color: #f25d4f!important;
+}
+
 .navbar-custom a#logo-mobile {
     color: #ffffff;
     font-family: 'Oswald';
