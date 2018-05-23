@@ -92,8 +92,16 @@ class SettingsType extends AbstractType
         $builder->add('name')
             ->add('toClassType', 'choice', ['choices'=>
                 isset($this->toClassType[$options['from_class_name']]) ? $this->toClassType[$options['from_class_name']] :
-                    [Settings::IS_DOCUMENT=>'Document', Settings::IS_DOCUMENTS_LIST=>'Documents list', Settings::IS_TEXT=>'Text', Settings::IS_TEXT_AREA=>'Long text',
-                        Settings::IS_BOOLEAN=>'On/Off', Settings::IS_FILE=>'File', Settings::IS_IMAGE=>'Image', Settings::IS_VIDEO=>'Video', Settings::IS_DATE=>'Date', Settings::IS_GALLERY=>'Gallery']
+                    ['Document'=>Settings::IS_DOCUMENT,
+                        'Documents list'=>Settings::IS_DOCUMENTS_LIST,
+                        'Text'=>Settings::IS_TEXT,
+                        'Long text'=>Settings::IS_TEXT_AREA,
+                        'On/Off'=>Settings::IS_BOOLEAN,
+                        'File'=>Settings::IS_FILE,
+                        'Image'=>Settings::IS_IMAGE,
+                        'Video'=>Settings::IS_VIDEO,
+                        'Date'=>Settings::IS_DATE,
+                        'Gallery'=>Settings::IS_GALLERY]
             ])
             ->add('position', 'hidden', ['data'=>$this->i, 'attr'=>['sortable'=>1]])
             ->add('inEnabled')
