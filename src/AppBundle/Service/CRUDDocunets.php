@@ -94,9 +94,7 @@ class CRUDDocunets
                         $toObject= $this->em->getRepository($this->toClasses[$changeset['toClassType'][0]])->find($settings->getToId());
 
                         $this->em->remove($toObject);
-                        dump($settings->getToId());
-                        dump($settings->getToClassName());
-dump($settings->getToClassType()); exit;
+
                         $parent = new $this->toClasses[$settings->getToClassType()];
 
                         if($parent instanceof AttributeInterface){
