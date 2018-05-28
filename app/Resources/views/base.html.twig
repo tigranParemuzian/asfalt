@@ -241,14 +241,15 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATNztJYcZfP7Y5JJ2SREcBsw7xd6zhbbA&amp;sensor=false"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113346760-1"></script>
     {% if app.environment != 'dev' %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80448216-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-113346760-1');
+        gtag('config', 'UA-80448216-1');
     </script>
     {% endif %}
 {% endblock %}
