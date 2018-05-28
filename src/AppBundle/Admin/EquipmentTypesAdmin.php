@@ -12,6 +12,7 @@ use AppBundle\Entity\Booking;
 use AppBundle\Entity\ProductItem;
 use AppBundle\Entity\Settings;
 use AppBundle\Form\IconType;
+use AppBundle\Form\ParametersType;
 use AppBundle\Form\SettingsType;
 use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -99,7 +100,7 @@ class EquipmentTypesAdmin extends Admin
                 'description'=>'Settings main create part'
             ))
                 ->add('toSettings', 'collection', [
-                    'type' => SettingsType::class ,
+                    'entry_type' => SettingsType::class ,
                     'entry_options'  => [
                         'attr'=>['class'=>'col-md-12'], 'container'=>$container,
                         'from_id'=>$item->getId(), 'from_class_name'=>$className
@@ -140,8 +141,15 @@ class EquipmentTypesAdmin extends Admin
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'Settings main create part'
             ))
-                ->add('fromSettings', 'app_bundle_parameters', ['from_id'=>$item->getId(), 'from_class_name'=>$className,
-                    'data'=>$settings, 'mapped' => false, 'label_attr'=>['class'=>'hidden']])
+                ->add('fromSettings', ParametersType::class,
+                    [
+                        'from_id'=>$item->getId(),
+                        'from_class_name'=>$className,
+                        'container'=>$container,
+                        'data'=>$settings,
+                        'mapped' => false,
+                        'label_attr'=>['class'=>'hidden']
+                    ])
                 ->end()
                 ->end();
         }
