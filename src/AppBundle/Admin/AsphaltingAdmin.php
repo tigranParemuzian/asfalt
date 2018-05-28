@@ -77,7 +77,11 @@ class AsphaltingAdmin extends Admin
             ))
             ->add('name')
             ->add('type')
-            ->add('state', 'choice', ['choices'=>[Asphalting::IS_NEW =>'New', Asphalting::IS_TOP=>'Top', Asphalting::IS_DISABLED=>'Disable']])
+            ->add('state', 'choice', ['choices'=>
+                [
+                    'New'=>Asphalting::IS_NEW,
+                    'Top'=>Asphalting::IS_TOP,
+                    'Disable'=>Asphalting::IS_DISABLED]])
             ->add('file', IconType::class, ['label'=>'Main image'])
             ->end()
         ;

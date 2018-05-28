@@ -74,7 +74,13 @@ class EquipmentsAdmin extends Admin
             ))
             ->add('name')
             ->add('type')
-            ->add('state', 'choice', ['choices'=>[Equipments::IS_NEW =>'New', Equipments::IS_TOP=>'Top', Equipments::IS_DISABLED=>'Disable']])
+            ->add('state', 'choice', [
+                'choices'=>[
+                    'New'=>Equipments::IS_NEW,
+                    'Top'=>Equipments::IS_TOP,
+                    'Disable'=>Equipments::IS_DISABLED
+                  ]
+            ])
             ->add('file', IconType::class, ['label'=>'Main image'])
             ->end()
               ->with('Marketing', array(

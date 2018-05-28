@@ -49,7 +49,14 @@ class EquipmentsPriceAdmin extends Admin
                 'description'=>'Main create part'
             ))
             ->add('value')
-            ->add('state', 'choice', ['choices'=>[EquipmentsPrice::IS_H=>'H', EquipmentsPrice::IS_4H=>'4H', EquipmentsPrice::IS_D=>'D', EquipmentsPrice::IS_W => 'W']])
+            ->add('state', 'choice', ['choices'=>
+                [
+                    'H'=>EquipmentsPrice::IS_H,
+                    '4H'=>EquipmentsPrice::IS_4H,
+                    'D'=>EquipmentsPrice::IS_D,
+                    'W'=>EquipmentsPrice::IS_W
+                ]
+            ])
             ->add('description')
             ->end()
 
