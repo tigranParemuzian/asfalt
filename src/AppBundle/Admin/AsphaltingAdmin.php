@@ -105,7 +105,7 @@ class AsphaltingAdmin extends Admin
             ))
         ->add('price', 'sonata_type_collection', array(
 //                'cascade_validation' => false,
-                'type_options'       => array('delete' => true ),
+                'type_options'       => ['delete' => true ],
             ), array(
                 'edit'            => 'inline',
                 'inline'          => 'table',

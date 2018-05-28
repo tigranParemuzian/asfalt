@@ -57,7 +57,7 @@ class Asphalting implements MainObjectabeleInterface
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AsphaltingPrice", mappedBy="asphalt", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AsphaltingPrice", mappedBy="asphalt", cascade={"persist"}, orphanRemoval=true)
      */
     private $price;
 
