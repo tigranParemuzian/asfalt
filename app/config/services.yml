@@ -136,7 +136,7 @@ services:
 
     app.admin.documents.list:
           class: AppBundle\Admin\DocumentsListAdmin
-          arguments: [~, AppBundle\Entity\DocumentsList, AppBundle\CustomAdmin]
+          arguments: [~, AppBundle\Entity\DocumentsList, AppBundle:CustomAdmin]
           tags:
               - {name: sonata.admin, manager_type: orm, group: Menu, label: Documents List, show_in_dashboard: false }
 

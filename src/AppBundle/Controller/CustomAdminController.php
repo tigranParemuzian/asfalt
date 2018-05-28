@@ -10,6 +10,8 @@ namespace AppBundle\Controller;
 
 
 use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomAdminController extends CRUDController
 {
@@ -29,11 +31,6 @@ class CustomAdminController extends CRUDController
 
         do{
             $clonedObject = clone $object;
-
-            if($clonedObject instanceof ProductStorage){
-
-                $clonedObject->setUser($this->getUser());
-            }
 
             $this->admin->create($clonedObject);
             $count --;
