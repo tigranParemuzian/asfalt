@@ -57,7 +57,7 @@
             {% if key%2==0 %}
             <div class="col-lg-6 content item">
                 <div class="wrap">
-                    <h2>{{ asphalt.name }}</h2>
+                    {#<h2>{{ asphalt.name }}</h2>#}
                     <p>{{ asphalt.description }}</p>
                     <a href="{{ path('asphalt_single', {'slugType':data.slug, 'slugAsphalt':asphalt.slug}) }}" class="btn btn1">
                         <div class="mask">Подробно</div>
