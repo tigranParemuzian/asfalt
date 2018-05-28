@@ -46,7 +46,7 @@ class EquipmentTypes implements MainObjectabeleInterface
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Equipments", mappedBy="type", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Equipments", mappedBy="type", cascade={"persist"}, orphanRemoval=true)
      */
     private $equipment;
 
@@ -59,7 +59,7 @@ class EquipmentTypes implements MainObjectabeleInterface
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EquipmentsPrice", mappedBy="equipmentType", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EquipmentsPrice", mappedBy="equipmentType", cascade={"persist"}, orphanRemoval=true)
      */
     private $price;
 
