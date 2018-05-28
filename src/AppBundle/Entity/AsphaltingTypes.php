@@ -47,7 +47,7 @@ class AsphaltingTypes implements MainObjectabeleInterface
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Asphalting", mappedBy="type", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Asphalting", mappedBy="type", cascade={"persist"}, orphanRemoval=true)
      */
     private $asphalting;
 
@@ -60,7 +60,7 @@ class AsphaltingTypes implements MainObjectabeleInterface
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AsphaltingPrice", mappedBy="asphaltType", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AsphaltingPrice", mappedBy="asphaltType", cascade={"persist"}, orphanRemoval=true)
      */
     private $price;
 
