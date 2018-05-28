@@ -172,8 +172,8 @@ sonata_block:
         sonata.admin.block.project.list:
 
 sonata_admin:
-    title:      Asphalt Kiev
-    title_logo: /bundles/app/img/asphalt-kiev-big-black.png
+    title:      Asphalt Moscow
+    title_logo: /bundles/app/img/asphalt_moscow.png
     security:
         handler: sonata.admin.security.handler.role
     templates:
