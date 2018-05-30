@@ -234,6 +234,13 @@ sonata_admin:
                     - app.admin.equipment.types
                 roles: [ ROLE_MODERATOR, ROLE_SUPER_ADMIN ]
 
+presta_sitemap:
+      defaults:
+          priority: 1
+          changefreq: daily
+          lastmod: now
+      timetolive: 3600
+
 liip_imagine:
     resolvers:
        default:

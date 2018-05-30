@@ -9,92 +9,95 @@
 namespace AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use Presta\SitemapBundle\Service\UrlContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-use Presta\SitemapBundle\Service\SitemapListenerInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
-class SitemapListener implements SitemapListenerInterface
+class SitemapListener implements EventSubscriberInterface
 {
 
-    private $event;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
 
-    private $router;
+    /**
+     * @var ManagerRegistry
+     */
+    private $doctrine;
 
-    private $em;
-
-    public function __construct(RouterInterface $router, EntityManager $em)
+    /**
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param ManagerRegistry       $doctrine
+     */
+    public function __construct(UrlGeneratorInterface $urlGenerator, ManagerRegistry $doctrine)
     {
-        $this->router = $router;
-        $this->em = $em;
+        $this->urlGenerator = $urlGenerator;
+        $this->doctrine = $doctrine;
     }
 
-    public function populateSitemap(SitemapPopulateEvent $event)
+    /**
+     * @inheritdoc
+     */
+    public static function getSubscribedEvents()
     {
-        $this->event = $event;
+        return [
+            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'main',
+            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'main',
+        ];
+    }
 
-        $section = $this->event->getSection();
-
-        if (is_null($section) || $section == 'default') {
-
-            //get absolute homepage url
-            /*$url = $this->router->generate('homepage', array(), true);
-
-            //add homepage url to the urlset named default
-            $this->createSitemapEntry($url, new \DateTime(), UrlConcrete::CHANGEFREQ_YEARLY, 1);*/
-
-            $datas =  $this->em->getRepository('AppBundle:AsphaltingTypes')->findAllForSitemap();
-
-            $equipment =  $this->em->getRepository('AppBundle:EquipmentTypes')->findAllForParent();
+    /**
+     * @param SitemapPopulateEvent $event
+     */
+    public function main(SitemapPopulateEvent $event)
+    {
+        $this->registerBlogPostsUrls($event->getUrlContainer());
+    }
 
 
-            foreach ($datas as $blog) {
+    /**
+     * @param UrlContainerInterface $urls
+     */
+    public function registerBlogPostsUrls(UrlContainerInterface $urls)
+    {
+        $posts = $this->doctrine->getRepository('AppBundle:AsphaltingTypes')->findAllForSitemap();
+        $equipments = $this->doctrine->getRepository('AppBundle:EquipmentTypes')->findAllForParent();
 
-                $url = $this->router->generate('asphalt_type', array('slug' => $blog->getSlug()), true);
+        foreach ($posts as $post) {
 
-                $blogUpdatedDate = $blog->getUpdated()->format("Y-m-d H:i:s");
-                $this->createSitemapEntry($url, new \DateTime($blogUpdatedDate), UrlConcrete::CHANGEFREQ_YEARLY, 0.8);
+            $urls->addUrl(
+                new UrlConcrete(
 
-                if($blog->getIsSingle() == false) {
-
-                    foreach ($blog->getAsphalting() as $asphalt){
-
-                        $url = $this->router->generate('asphalt_single', array('slugType' => $blog->getSlug(), 'slugAsphalt'=>$asphalt->getSlug()), true);
-
-                        $blogUpdatedDate = $asphalt->getUpdated()->format("Y-m-d H:i:s");
-                        $this->createSitemapEntry($url, new \DateTime($blogUpdatedDate), UrlConcrete::CHANGEFREQ_YEARLY, 0.8);
-
-                    }
-
-
-                }
-            }
-
-            foreach ($equipment as $blog) {
-
-                $url = $this->router->generate('asphalt_type', array('slug' => $blog['slug']), true);
-
-                $blogUpdatedDate = $blog['updated']->format("Y-m-d H:i:s");
-                $this->createSitemapEntry($url, new \DateTime($blogUpdatedDate), UrlConcrete::CHANGEFREQ_YEARLY, 0.8);
-            }
-
-
+                    $this->urlGenerator->generate(
+                        'asphalt_type',
+                        ['slug' => $post->getSlug()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                ),
+                'main'
+            );
         }
-    }
 
-    private function createSitemapEntry($url, $modifiedDate, $changeFrequency, $priority)
-    {
-        //add homepage url to the urlset named default
-        $this->event->getGenerator()->addUrl(
-            new UrlConcrete(
-                $url,
-                $modifiedDate,
-                $changeFrequency,
-                $priority
-            ),
-            'default'
-        );
+        foreach ($equipments as $post) {
+
+            $urls->addUrl(
+                new UrlConcrete(
+
+                    $this->urlGenerator->generate(
+                        'asphalt_type',
+                        ['slug' => $post['slug']],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                ),
+                'main'
+            );
+        }
     }
 }
 

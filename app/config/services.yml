@@ -38,9 +38,9 @@ services:
         class: AppBundle\EventListener\SitemapListener
         arguments:
             - '@router'
-            - '@doctrine.orm.default_entity_manager'
+            - '@doctrine'
         tags:
-            - { name: "presta.sitemap.listener"}
+            - { name: "kernel.event_subscriber", priority: 100 }
 
     app.listener.compression:
         class: AppBundle\EventListener\CompressionListener
