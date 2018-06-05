@@ -101,7 +101,7 @@ hr {
 }
 .bg-overlay.pattern {
   background-color: rgba(0, 0, 0, 0.4);
-  background-image: url(http://swlabs.co/images/background/bg_pattern2.png);
+  background-image: url(https://swlabs.co/images/background/bg_pattern2.png);
 }
 .btn,
 .input-group-lg > .form-control,
@@ -114,7 +114,7 @@ Begin Header
 *****/
 header {
   display: block;
-  background: url(http://swlabs.co/images/background/bg1.jpg) no-repeat center top fixed;
+  background: url(https://swlabs.co/images/background/bg1.jpg) no-repeat center top fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -381,7 +381,7 @@ a.btn-outlined.btn-default:focus {
   text-transform: uppercase;
 }
 #about-1 {
-  background-image: url(http://swlabs.co/images/background/bg_pattern1.png);
+  background-image: url(https://swlabs.co/images/background/bg_pattern1.png);
 }
 #about-1 h3 {
   margin-top: 0;
@@ -419,7 +419,7 @@ a.btn-outlined.btn-default:focus {
   background: #f1f1f1;
 }
 #about-2 {
-  background: url(http://swlabs.co/images/background/bg3.jpg) no-repeat center center fixed;
+  background: url(https://swlabs.co/images/background/bg3.jpg) no-repeat center center fixed;
 }
 #about-2 h2.factor {
   font-family: 'Oswald', sans-serif;
@@ -432,7 +432,7 @@ a.btn-outlined.btn-default:focus {
   margin-top: 10px;
 }
 #team {
-  background: url(http://swlabs.co/images/background/bg_pattern1.png);
+  background: url(https://swlabs.co/images/background/bg_pattern1.png);
 }
 #team #owl-our-team .item {
   margin: 3px 10px;
@@ -504,7 +504,7 @@ a.btn-outlined.btn-default:focus {
   border-bottom: 0;
 }
 #banner {
-  background: url(http://swlabs.co/images/background/bg5.jpg) no-repeat center center fixed;
+  background: url(https://swlabs.co/images/background/bg5.jpg) no-repeat center center fixed;
 }
 #banner .bg-overlay {
   padding-top: 50px;
@@ -575,7 +575,7 @@ a.btn-outlined.btn-default:focus {
   font-weight: bold;
 }
 #skills {
-  background: url(http://swlabs.co/images/background/bg_pattern1.png);
+  background: url(https://swlabs.co/images/background/bg_pattern1.png);
 }
 #skills .progress {
   -webkit-border-radius: 0 !important;
@@ -600,7 +600,7 @@ a.btn-outlined.btn-default:focus {
   text-align: right;
 }
 #clients {
-  background: url(http://swlabs.co/images/background/bg5.jpg) no-repeat center center fixed;
+  background: url(https://swlabs.co/images/background/bg5.jpg) no-repeat center center fixed;
 }
 #clients #owl-our-clients .item blockquote {
   font-style: italic;
@@ -712,7 +712,7 @@ a.btn-outlined.btn-default:focus {
   font-size: 50px;
 }
 #pricing {
-  background: url(http://swlabs.co/images/background/bg_pattern1.png);
+  background: url(https://swlabs.co/images/background/bg_pattern1.png);
 }
 #pricing .row.row-merge {
   margin: 0;
@@ -781,7 +781,7 @@ a.btn-outlined.btn-default:focus {
   z-index: 2;
 }
 #newsletter {
-  background: url(http://swlabs.co/images/background/bg2.jpg) no-repeat center center fixed;
+  background: url(https://swlabs.co/images/background/bg2.jpg) no-repeat center center fixed;
 }
 #newsletter .form-newsletter .input-group input {
   background: rgba(0, 0, 0, 0.7);
