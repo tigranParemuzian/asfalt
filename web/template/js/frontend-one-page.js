@@ -54,7 +54,7 @@ $(function () {
 
     //BEGIN GOOGLE MAP
     // When the window has finished loading create our google map below
-    google.maps.event.addDomListener(window, 'load', init);
+   /* google.maps.event.addDomListener(window, 'load', init);
 
     function init() {
         var myOptions = {
@@ -66,7 +66,7 @@ $(function () {
         };
 
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
-    }
+    }*/
     //END GOOGLE MAP
 
     //BEGIN JQUERY ISOTOPE
