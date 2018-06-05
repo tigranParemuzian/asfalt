@@ -35,7 +35,7 @@
             <meta content="http://merx.usavin.com" name="author"/>
             <meta property="og:title" content="Асфальтирование дорог в Москве"/>
             <meta property="og:type" content="website"/>
-            <meta property="og:url" content="http://www.asphalt-moscow.ru"/>
+            <meta property="og:url" content="https://www.asphalt-moscow.ru"/>
             <meta property="og:image" content="{{- 'http://'~host -}}{{- asset('bundles/app/img/asphalt_moscow.png') -}}"/>
             <meta property="og:description"
                   content="Асфальтирование дорог в Москве"/>
@@ -48,8 +48,8 @@
     {% block stylesheets %}
 
         <!--Loading bootstrap css-->
-        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
 
         {% stylesheets
         'template/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css'
@@ -240,7 +240,7 @@
     {% endjavascripts %}
     {#<script type="text/javascript" src="{{ asset('bundles/app/js/base.js') }}"></script>#}
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATNztJYcZfP7Y5JJ2SREcBsw7xd6zhbbA&amp;sensor=false"></script>
+    {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATNztJYcZfP7Y5JJ2SREcBsw7xd6zhbbA&amp;sensor=false"></script>#}
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {% if app.environment != 'dev' %}
