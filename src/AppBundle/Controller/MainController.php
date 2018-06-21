@@ -62,7 +62,6 @@ class MainController extends Controller
 
         $equipment = $em->getRepository('AppBundle:EquipmentTypes')->findForList();
 
-//dump($equipment); exit;
         return ['data'=>$data, 'equipments'=>$equipment];
 
     }
@@ -99,6 +98,28 @@ class MainController extends Controller
 
         if(!$data){
             return $this->redirectToRoute('page', ['slug'=>'about-us']);
+        }
+
+
+        if($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                $contact = $form->getData();
+                $validator = $this->get('validator');
+                $errors = $validator->validate($contact);
+
+                if(count($errors)>0){
+                    $this->addFlash('error', $errors);
+                }else {
+
+                    $this->sendEmailCreateUser($contact);
+
+                    $this->addFlash('success', 'success');
+
+                    return $this->redirect($_SERVER['HTTP_REFERER'].'#contact');
+                }
+            }
+
         }
 
         return ['data'=>$data,'form'=>$form->createView()];
@@ -438,6 +459,45 @@ class MainController extends Controller
 
         return $settings;
     }
+
+    /**
+     * @param $invoiceNumber
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function sendEmailCreateUser($data){
+
+        try{
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Message from".$data['name'] )
+                ->setFrom($data['email'])
+                ->setTo($this->container->getParameter('mailer_user'));
+            /* for ($i = 1; $i<count($email); $i++){
+                 $message
+                     ->addCc("{$email[$i]}");
+             }*/
+            $message->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                    '@App/main/email_content.html.twig',
+                    array('data' => $data)
+                ),
+                'text/html'
+            )
+                /* ->attach(\Swift_Attachment::fromPath($pageUrl))
+                 ->attach(\Swift_Attachment::fromPath($path))*/;
+            $this->get('mailer')->send($message);
+
+        } catch (\Swift_Message $exception){
+
+            $data = json_encode($data);
+            $this->addFlash(
+                'error',
+                "Sorry invalid data {$data} not found."
+            );
+
+        }
+    }
+
 
 
 }
