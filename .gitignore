@@ -18,6 +18,7 @@
 /web/js/
 /web/css/
 /web/media
+/web/uploads
 .idea
 chat.log
 composer.lock
