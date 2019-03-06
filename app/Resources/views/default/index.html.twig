@@ -34,19 +34,20 @@
  {% endfor %}
 
  {% block meta_seo %}
-     <meta content="" name="description"/>
-     <meta content="" name="keywords"/>
+     <meta content="{{ meta_description.value }}" name="description"/>
+     {#<meta content="" name="keywords"/>#}
+     <meta content="{{ meta_title.value }}" name="title"/>
      <meta content="http://merx.usavin.com" name="author"/>
-     <meta property="og:title" content="{{ meta_title.value }}"/>
-     <meta property="og:type" content="website"/>
-     <meta property="og:url" content="{{ path(app.request.get('_route')) }}"/>
+     {#<meta property="og:title" content="{{ meta_title.value }}"/>#}
+     {#<meta property="og:type" content="website"/>#}
+     {#<meta property="og:url" content="{{ path(app.request.get('_route')) }}"/>#}
      <meta property="og:image" content="{{ asset('bundles/app/img/asphalt_moscow.png') }}"/>
-     <meta property="og:description"
-           content="{{ meta_description.value }}"/>
+     {#<meta property="og:description"#}
+           {#content="{{ meta_description.value }}"/>#}
      <meta property="og:image:width" content="1800"/>
      <meta property="og:image:height" content="945"/>
  {% endblock %}
-{% block title %}{{ meta_title.value|capitalize }}{% endblock %}
+{% block title %}{{ meta_title.value }}{% endblock %}
 {% block main_citation %}
     <section class="intro">
         <div class="intro-body">
