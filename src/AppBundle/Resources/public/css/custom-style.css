@@ -122,3 +122,9 @@ h3.card-header {
 #tocall:hover i {
     color: #ffffff;
 }
+#about .thumbnail{
+    height: 520px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}

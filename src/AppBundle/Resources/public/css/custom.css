@@ -1,0 +1,70 @@
+#about .thumbnail{
+    height: 520px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*#services .thumbnail{
+    height: 600px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}*/
+
+header:not(.bg-video){
+    position: relative;
+}
+
+header:not(.bg-video)::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    left: 0;
+    top: 0;
+}
+
+
+header:not(.bg-video){
+    height: 600px;
+    display: flex !important;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+header.bg-video .videoBG video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+header:not(.bg-video) .bg-overlay.pattern{
+    background: none !important;
+}
+
+header:not(.bg-video) .intro{
+    padding: 0 !important;
+    
+}
+
+header:not(.bg-video){
+    background-attachment: scroll !important;
+    background-position: center center !important;
+}
+
+
+@media screen and (max-width: 767px){
+    header:not(.bg-video){
+        height: 300px !important;
+        align-items: flex-end !important;
+    }
+    header:not(.bg-video) .page-name h1{
+        font-size: 24px;
+
+    }
+}
+
