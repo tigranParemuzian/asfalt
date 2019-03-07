@@ -52,8 +52,7 @@
 {% block title %}{{ data.name }}{% endblock %}
 
 {% block header %}
-
-    <header class="parent-header" style="background: url({{ asset(banner|length >0 ? banner.downloadLink : 'bundles/app/img/header4.jpg')|lbImageFilter('banner_home') }}) no-repeat center top fixed; background-size: cover">
+    <header class="parent-header" style="background: url({{ asset( data.downloadLink)|lbImageFilter('banner_home') }}) no-repeat center top fixed; background-size: cover">
         <div class="bg-overlay pattern">
             {% block menu %}
                 {{ render(controller('AppBundle:Rest/ParentRest:getMenu')) }}
