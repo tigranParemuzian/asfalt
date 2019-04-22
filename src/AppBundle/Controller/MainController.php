@@ -67,7 +67,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/o-asphalt-kiev", name="about_us" , options={"sitemap" = true})
+     * @Route("/o-asphalt-moscow", name="about_us" , options={"sitemap" = true})
      * @Cache(expires="tomorrow", public=true)
      * @Template()
      */
@@ -75,7 +75,7 @@ class MainController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $data = $em->getRepository('AppBundle:Pages')->findOneBy(['slug'=>'o-asphalt-kiev']);
+        $data = $em->getRepository('AppBundle:Pages')->findOneBy(['slug'=>'o-asphalt-moscow']);
 
 
 
