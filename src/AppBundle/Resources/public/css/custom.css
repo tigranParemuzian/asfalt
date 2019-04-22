@@ -68,3 +68,6 @@ header:not(.bg-video){
     }
 }
 
+header .intro .intro-body #slide-intro h1 #rotate{
+    margin-left: 0 !important;
+}
